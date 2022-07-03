@@ -55,8 +55,6 @@ input {
 
 .diagram {
   cursor: pointer;
-  position: absolute;
-  transform: translate(-50%, -50%);
 }
 
 /*--- #e0d8ed ---*/
@@ -262,6 +260,11 @@ li {
 }
 
 /*--------------------------------------------------Data-------------------------*/
+
+.hide {
+  display: none;
+}
+
 
 .data-model-canvas {
   overflow: hidden;

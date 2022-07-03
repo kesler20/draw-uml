@@ -1,54 +1,18 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
+import { Handle, Position } from "react-flow-renderer";
 
-class UmlDiagram extends Component {
-  // array of input objects array[ {visibility : '+', signature: 'functionName', type: 'int' } ]
-  state = {
-    gridTable: [{ visibility: "+", signature: "", type: "" }],
-  };
+const UmlDiagram = ({ data }) => {
+  const [gridTable, setGridTable] = useState(data.gridTable);
+  // create a style for the sources and a style for the targets and append the sources and the targets onclick of the bottom
+  const sourceHandleStyle = { width: 20, height: 20,backgroundColor: 'green' };
+  const targetHandleStyle = { width: 20, height: 20,backgroundColor: 'yellow' };
 
-  componentDidMount() {
-    this.enableDrag();
-  }
-
-  getRandomNumber = (maxNum) => {
-    return Math.floor(Math.random() * maxNum);
-  };
-
-  getRandomColor = () => {
-    const r = this.getRandomNumber(200);
-    const g = this.getRandomNumber(200);
-    const b = this.getRandomNumber(200);
-
-    return `rgb(${r}, ${g}, ${b})`;
-  };
-
-  enableDrag = () => {
-    const dragDiagrams = document.querySelectorAll(".diagram");
-    dragDiagrams.forEach((diagram) => {
-      const drag = (e) => {
-        diagram.style.top = e.pageY + "px";
-        diagram.style.left = e.pageX + "px";
-      };
-
-      /*function drag(e) {
-        
-      }*/
-
-      diagram.addEventListener("mousedown", () => {
-        window.addEventListener("mousemove", drag);
-      });
-
-      window.addEventListener("mouseup", () => {
-        window.removeEventListener("mousemove", drag);
-      });
-    });
-  };
-
-  addRow = (e) => {
-    let gridTable = this.state.gridTable;
-    gridTable.push({ visibility: "+", signature: "", type: "" });
-    console.log(gridTable);
-    this.setState({ gridTable });
+  const addRow = (e) => {
+    let grid = data.gridTable;
+    grid.push({ visibility: "+", signature: "", type: "" });
+    console.log(grid);
+    let gridTable = grid;
+    setGridTable({ gridTable });
     setTimeout(() => {
       let umlTable =
         e.target.parentNode.classList.value === "grid-table"
@@ -60,11 +24,12 @@ class UmlDiagram extends Component {
     }, 0);
   };
 
-  deleteRow = (e) => {
-    let gridTable = this.state.gridTable;
-    gridTable.pop();
-    console.log(gridTable);
-    this.setState({ gridTable });
+  const deleteRow = (e) => {
+    let grid = data.gridTable;
+    grid.pop();
+    console.log(grid);
+    let gridTable = grid;
+    setGridTable({ gridTable });
     let umlTable =
       e.target.parentNode.classList.value === "grid-table"
         ? e.target.parentNode
@@ -73,7 +38,16 @@ class UmlDiagram extends Component {
     signatureBox.focus();
   };
 
-  findIndex = (collection, item) => {
+  const handleConnection = (e) => {
+    let handle =
+      e.target.parentNode.parentNode.parentNode.children.item(0).classList
+        .value === "handle"
+        ? e.target.parentNode.parentNode.parentNode.children.item(0)
+        : e.target.parentNode.parentNode.children.item(0);
+    console.log(handle);
+  };
+
+  const findIndex = (collection, item) => {
     let i = 0;
     for (let j of collection) {
       if (j === item) return i;
@@ -81,15 +55,15 @@ class UmlDiagram extends Component {
     }
   };
 
-  handleNavigation = (e) => {
+  const handleNavigation = (e) => {
     if (e.key === "Enter") {
-      this.addRow(e);
+      addRow(e);
     } else if (e.keyCode === 8 && e.target.value === "") {
-      this.deleteRow(e);
+      deleteRow(e);
     } else if (e.key === "ArrowRight") {
       try {
         let nextRow = e.target.parentNode.children.item(
-          this.findIndex(e.target.parentNode.children, e.target) + 1
+          findIndex(e.target.parentNode.children, e.target) + 1
         );
         nextRow.focus();
       } catch (e) {
@@ -98,7 +72,7 @@ class UmlDiagram extends Component {
     } else if (e.key === "ArrowLeft") {
       try {
         let nextRow = e.target.parentNode.children.item(
-          this.findIndex(e.target.parentNode.children, e.target) - 1
+          findIndex(e.target.parentNode.children, e.target) - 1
         );
         nextRow.focus();
       } catch (e) {
@@ -107,7 +81,7 @@ class UmlDiagram extends Component {
     } else if (e.key === "ArrowUp") {
       try {
         let nextRow = e.target.parentNode.children.item(
-          this.findIndex(e.target.parentNode.children, e.target) - 4
+          findIndex(e.target.parentNode.children, e.target) - 4
         );
         nextRow.focus();
       } catch (e) {
@@ -116,7 +90,7 @@ class UmlDiagram extends Component {
     } else if (e.key === "ArrowDown") {
       try {
         let nextRow = e.target.parentNode.children.item(
-          this.findIndex(e.target.parentNode.children, e.target) + 4
+          findIndex(e.target.parentNode.children, e.target) + 4
         );
         nextRow.focus();
       } catch (e) {
@@ -127,45 +101,56 @@ class UmlDiagram extends Component {
     }
   };
 
-  render() {
-    return (
-      <div className="diagram" style={{ top: 285, left: 534 }}>
-        <div className="uml">
-          <input
-            type="text"
-            placeholder="Object Name"
-            className="object-name"
-            style={{ borderTop: `25px solid ${this.getRandomColor()}` }}
-            onKeyDown={(e) => this.handleNavigation(e)}
-          />
-          <div className="grid-table">
-            {this.state.gridTable.map((inputElement) => {
-              return (
-                <React.Fragment key={inputElement.visibility}>
-                  <input
-                    value={inputElement.visibility}
-                    onChange={(e) => (inputElement.visibility = e.target.value)}
-                    onKeyDown={(e) => this.handleNavigation(e)}
-                  />
-                  <input
-                    onChange={(e) => (inputElement.signature = e.target.value)}
-                    onKeyDown={(e) => this.handleNavigation(e)}
-                  />
-                  <input
-                    onChange={(e) => (inputElement.type = e.target.value)}
-                    onKeyDown={(e) => this.handleNavigation(e)}
-                  />
-                  <div className="arrowBtn">
-                    <i className="fas fa-plus" aria-hidden="true"></i>
-                  </div>
-                </React.Fragment>
-              );
-            })}
-          </div>
+  return (
+    <div className="diagram" style={{ top: 285, left: 534 }}>
+      <div className="uml">
+        <Handle
+          className="handle"
+          type="target"
+          position={Position.Right}
+          style={targetHandleStyle}
+        />
+        <input
+          type="text"
+          placeholder="Object Name"
+          className="object-name"
+          style={{ borderTop: `25px solid ${data.color}` }}
+          onKeyDown={(e) => handleNavigation(e)}
+        />
+        <div className="grid-table">
+          {data.gridTable.map((inputElement) => {
+            return (
+              <React.Fragment key={inputElement.visibility}>
+                <input
+                  value={inputElement.visibility}
+                  onChange={(e) => (inputElement.visibility = e.target.value)}
+                  onKeyDown={(e) => handleNavigation(e)}
+                />
+                <input
+                  onChange={(e) => (inputElement.signature = e.target.value)}
+                  onKeyDown={(e) => handleNavigation(e)}
+                />
+                <input
+                  onChange={(e) => (inputElement.type = e.target.value)}
+                  onKeyDown={(e) => handleNavigation(e)}
+                />
+                <div className="arrowBtn" onClick={(e) => handleConnection(e)}>
+                  <i className="fas fa-plus" aria-hidden="true"></i>
+                </div>
+              </React.Fragment>
+            );
+          })}
         </div>
+        <Handle
+          className="handle"
+          type="source"
+          position={Position.Left}
+          id="a"
+          style={sourceHandleStyle}
+        />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default UmlDiagram;
