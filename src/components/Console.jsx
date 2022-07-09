@@ -12,7 +12,7 @@ import UmlDiagram from "./UmlDiagram.jsx";
 
 const storageSize = 1000;
 
-const getRandomNumber = (maxNum) => {
+export const getRandomNumber = (maxNum) => {
   return Math.floor(Math.random() * maxNum);
 };
 
@@ -84,12 +84,14 @@ const Console = () => {
     setNodes(nodes);
   };
 
-  const saveToLocalStorage = () => {
-    nodes.forEach((node) => {
-      localStorage.setItem(node.id, JSON.stringify(node));
-    });
-    console.log("the following nodes have been saved", nodes);
-    alert("Diagram Saved Successfully ☑️");
+  const handleCopy = () => {
+    let elem = document.createElement("textarea");
+    document.body.appendChild(elem);
+    elem.value = JSON.stringify(nodes);
+    elem.select();
+    document.execCommand("copy");
+    document.body.removeChild(elem);
+    alert("Diagram Successfully Copied To Clipboard ☑️");
   };
 
   const createTable = () => {
@@ -106,14 +108,19 @@ const Console = () => {
     console.log(nodes);
   };
 
+  const printDiagram = () => {
+    setTimeout(() => {
+      window.print();
+    }, 2000);
+  };
+
   return (
     <div>
       <section style={{ margin: "0% 20%" }}>
         <Navbar
           onCreateTable={() => createTable()}
-          onDownloadDiagram={() => loadNodesFromLocalStorage()}
-          onSaveDiagram={() => saveToLocalStorage()}
-          onCopyDiagram={() => loadNodesFromLocalStorage()}
+          onDownloadDiagram={() => printDiagram()}
+          onSaveDiagram={() => handleCopy()}
         />
       </section>
 

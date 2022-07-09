@@ -1,6 +1,15 @@
 import React, { useState } from "react";
 import { Handle, Position } from "react-flow-renderer";
 
+const findIndex = (collection, item) => {
+  let i = 0;
+  for (let j of collection) {
+    if (j === item) return i;
+    i++;
+  }
+};
+
+
 const UmlDiagram = ({ data }) => {
   const [gridTable, setGridTable] = useState(data.gridTable);
   // create a style for the sources and a style for the targets and append the sources and the targets onclick of the bottom
@@ -23,6 +32,7 @@ const UmlDiagram = ({ data }) => {
       signatureBox.focus();
     }, 0);
   };
+
 
   const deleteRow = (e) => {
     let grid = data.gridTable;
@@ -47,13 +57,6 @@ const UmlDiagram = ({ data }) => {
     console.log(handle);
   };
 
-  const findIndex = (collection, item) => {
-    let i = 0;
-    for (let j of collection) {
-      if (j === item) return i;
-      i++;
-    }
-  };
 
   const handleNavigation = (e) => {
     if (e.key === "Enter") {

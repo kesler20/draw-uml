@@ -1,15 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import Logo from "../logo.svg";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const Navbar = ({
   onCreateTable,
   onSaveDiagram,
   onDownloadDiagram,
-  onCopyDiagram,
+  onCopyDiagram
 }) => {
-  const [sideBarView, setSideBarView] = useState([]);
+  const [sideBarView, setSideBarView] = useState([false]);
   // true if there is storage data and false if there is not
   const [storageData, setStorageData] = useState([]);
 
@@ -22,11 +22,7 @@ const Navbar = ({
       setStorageData(false);
     }
   };
-
-  useEffect(() => {
-    changeBarView();
-  }, []);
-
+  
   const changeBarView = () => {
     let currentView = !sideBarView;
     setSideBarView(currentView);
@@ -47,12 +43,6 @@ const Navbar = ({
               className="fas fa-download fa-2x"
               onClick={onDownloadDiagram}
             ></i>
-          </div>
-          <div className="avatar" data-tooltip="Take Notes">
-            <i className="fas fa-pen fa-2x modal-btn"></i>
-          </div>
-          <div className="avatar" data-tooltip="Copy Notes">
-            <i className="fas fa-copy fa-2x" onClick={onCopyDiagram}></i>
           </div>
         </SideBar>
       );
