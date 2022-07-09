@@ -10,7 +10,6 @@ import ReactFlow, {
 import Navbar from "./Navbar.jsx";
 import UmlDiagram from "./UmlDiagram.jsx";
 
-
 const storageSize = 1000;
 
 const getRandomNumber = (maxNum) => {
@@ -37,13 +36,13 @@ const initialNodes = [
   {
     id: "node-1",
     type: "umlDiagram",
-    position: { x: 0, y: 0 },
+    position: { x: 500, y: 500 },
     data: {
       color: getRandomColor(),
       gridTable: [{ visibility: "+", signature: "", type: "" }],
       connection: false,
     },
-  }
+  },
 ];
 
 const initialEdges = [];
@@ -51,7 +50,6 @@ const initialEdges = [];
 const nodeTypes = { umlDiagram: UmlDiagram };
 
 const Console = () => {
-
   const [edges, setEdges] = useState(initialEdges);
   const [nodes, setNodes] = useState(initialNodes);
 
@@ -79,11 +77,11 @@ const Console = () => {
       nodesFromLocalStorage.push(JSON.parse(localStorage.getItem(nd)));
     });
     nodesFromLocalStorage.forEach((nds) => {
-      nds.id = `node-${nodes.length + 1}`
-      nodes.push(nds)
-      console.log(nds)
-    })
-    setNodes(nodes)
+      nds.id = `node-${nodes.length + 1}`;
+      nodes.push(nds);
+      console.log(nds);
+    });
+    setNodes(nodes);
   };
 
   const saveToLocalStorage = () => {
@@ -91,14 +89,14 @@ const Console = () => {
       localStorage.setItem(node.id, JSON.stringify(node));
     });
     console.log("the following nodes have been saved", nodes);
-    alert('Diagram Saved Successfully ☑️')
+    alert("Diagram Saved Successfully ☑️");
   };
 
   const createTable = () => {
     nodes.push({
       id: `node-${nodes.length + 1}`,
       type: "umlDiagram",
-      position: { x: 0, y: 0 },
+      position: { x: 10, y: 10 },
       data: {
         color: getRandomColor(),
         gridTable: [{ visibility: "+", signature: "", type: "" }],
@@ -145,6 +143,3 @@ const Console = () => {
 };
 
 export default Console;
-
-
-
