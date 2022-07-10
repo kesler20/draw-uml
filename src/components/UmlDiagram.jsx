@@ -9,12 +9,8 @@ const findIndex = (collection, item) => {
   }
 };
 
-
 const UmlDiagram = ({ data }) => {
   const [gridTable, setGridTable] = useState(data.gridTable);
-  // create a style for the sources and a style for the targets and append the sources and the targets onclick of the bottom
-  const sourceHandleStyle = { width: 20, height: 20,backgroundColor: 'green' };
-  const targetHandleStyle = { width: 20, height: 20,backgroundColor: 'yellow' };
 
   const addRow = (e) => {
     let grid = data.gridTable;
@@ -33,7 +29,6 @@ const UmlDiagram = ({ data }) => {
     }, 0);
   };
 
-
   const deleteRow = (e) => {
     let grid = data.gridTable;
     grid.pop();
@@ -49,14 +44,8 @@ const UmlDiagram = ({ data }) => {
   };
 
   const handleConnection = (e) => {
-    let handle =
-      e.target.parentNode.parentNode.parentNode.children.item(0).classList
-        .value === "handle"
-        ? e.target.parentNode.parentNode.parentNode.children.item(0)
-        : e.target.parentNode.parentNode.children.item(0);
-    console.log(handle);
+    console.log(data.gridTable);
   };
-
 
   const handleNavigation = (e) => {
     if (e.key === "Enter") {
@@ -107,15 +96,26 @@ const UmlDiagram = ({ data }) => {
   return (
     <div className="diagram" style={{ top: 285, left: 534 }}>
       <div className="uml">
-        <Handle
-          className="handle"
-          type="target"
-          position={Position.Right}
-          style={targetHandleStyle}
-        />
+        {data.gridTable.map((i) => {
+          let offSet = data.gridTable.indexOf(i) * 50 + 100;
+          return (
+            <Handle
+              type="target"
+              id={offSet + "b" + i.objectName}
+              position={Position.Right}
+              style={{
+                width: 20,
+                height: 20,
+                top: offSet,
+                backgroundColor: "yellow",
+              }}
+            />
+          );
+        })}
         <input
           type="text"
-          placeholder="Object Name"
+          placeholder={data.objectName}
+          onChange={(e) => (data.objectName = e.target.value)}
           className="object-name"
           style={{ borderTop: `25px solid ${data.color}` }}
           onKeyDown={(e) => handleNavigation(e)}
@@ -125,15 +125,17 @@ const UmlDiagram = ({ data }) => {
             return (
               <React.Fragment key={inputElement.visibility}>
                 <input
-                  value={inputElement.visibility}
+                  placeholder={inputElement.visibility}
                   onChange={(e) => (inputElement.visibility = e.target.value)}
                   onKeyDown={(e) => handleNavigation(e)}
                 />
                 <input
+                  placeholder={inputElement.signature}
                   onChange={(e) => (inputElement.signature = e.target.value)}
                   onKeyDown={(e) => handleNavigation(e)}
                 />
                 <input
+                  placeholder={inputElement.type}
                   onChange={(e) => (inputElement.type = e.target.value)}
                   onKeyDown={(e) => handleNavigation(e)}
                 />
@@ -144,13 +146,22 @@ const UmlDiagram = ({ data }) => {
             );
           })}
         </div>
-        <Handle
-          className="handle"
-          type="source"
-          position={Position.Left}
-          id="a"
-          style={sourceHandleStyle}
-        />
+        {data.gridTable.map((i) => {
+          let offSet = data.gridTable.indexOf(i) * 50 + 100;
+          return (
+            <Handle
+              type="source"
+              id={offSet + "a" + i.objectName}
+              position={Position.Left}
+              style={{
+                width: 20,
+                height: 20,
+                top: offSet,
+                backgroundColor: "green",
+              }}
+            />
+          );
+        })}
       </div>
     </div>
   );

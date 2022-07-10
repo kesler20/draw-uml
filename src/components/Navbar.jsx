@@ -7,7 +7,9 @@ const Navbar = ({
   onCreateTable,
   onSaveDiagram,
   onDownloadDiagram,
-  onCopyDiagram
+  onCopyDiagram,
+  onPrintDiagram,
+  onPasteDiagram
 }) => {
   const [sideBarView, setSideBarView] = useState([false]);
   // true if there is storage data and false if there is not
@@ -22,7 +24,7 @@ const Navbar = ({
       setStorageData(false);
     }
   };
-  
+
   const changeBarView = () => {
     let currentView = !sideBarView;
     setSideBarView(currentView);
@@ -44,6 +46,15 @@ const Navbar = ({
               onClick={onDownloadDiagram}
             ></i>
           </div>
+          <div className="avatar" data-tooltip="Copy Diagram">
+            <i className="fas fa-copy fa-2x" onClick={onCopyDiagram}></i>
+          </div>
+          <div className="avatar" data-tooltip="Print Diagram">
+            <i className="fas fa-print fa-2x" onClick={onPrintDiagram}></i>
+          </div>
+          <div className="avatar" data-tooltip="Paste Diagram">
+            <i className="fas fa-paste fa-2x" onClick={onPasteDiagram}></i>
+          </div>
         </SideBar>
       );
     } else {
@@ -51,7 +62,7 @@ const Navbar = ({
     }
   };
   return (
-    <div>
+    <div className="nav">
       <NavBar>
         <HamburgerMenu onClick={() => changeBarView()}>
           <i className="fa fa-bars fa-2x" style={{ color: "grey" }}></i>
@@ -177,6 +188,4 @@ const SideBar = styled.div`
   }
 `;
 
-
 export default Navbar;
-

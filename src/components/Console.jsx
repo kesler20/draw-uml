@@ -38,6 +38,7 @@ const initialNodes = [
     type: "umlDiagram",
     position: { x: 500, y: 500 },
     data: {
+      objectName: "Object Name",
       color: getRandomColor(),
       gridTable: [{ visibility: "+", signature: "", type: "" }],
       connection: false,
@@ -66,32 +67,77 @@ const Console = () => {
     [setEdges]
   );
 
+  const handleSave = () => {
+    let keysFromStorage = loadItemsFromLocalStorage();
+    keysFromStorage =
+      keysFromStorage.length === 0
+        ? [...nodes.map((nds) => nds.id), ...edges.map((edg) => edg.id)]
+        : loadItemsFromLocalStorage();
+
+    console.log(keysFromStorage);
+    keysFromStorage.forEach((key) => {
+      nodes.forEach((nds) => {
+        if (nds.id === key) {
+          localStorage.setItem("s" + key, JSON.stringify(nds));
+        }
+      });
+      edges.forEach((edg) => {
+        if (edg.id === key) {
+          localStorage.setItem(key, JSON.stringify(edg));
+        }
+      });
+    });
+
+    alert("Diagram Saved Successfully ☑️");
+  };
+
   const loadNodesFromLocalStorage = () => {
-    let nodesFromLocalStorage = [];
-    let elementsNodesKeys;
-    let elementsFromLocalStorage = loadItemsFromLocalStorage();
-    elementsNodesKeys = elementsFromLocalStorage.filter((item) =>
-      item.includes("node")
-    );
-    elementsNodesKeys.forEach((nd) => {
-      nodesFromLocalStorage.push(JSON.parse(localStorage.getItem(nd)));
+    let keysFromStorage = loadItemsFromLocalStorage();
+    let edgesFromStorage = [];
+    let nodesFromStorage = [];
+    keysFromStorage.forEach((key) => {
+      if (key.includes("reactflow")) {
+        edgesFromStorage.push(JSON.parse(localStorage.getItem(key)));
+      } else if (key.includes("snode")) {
+        nodesFromStorage.push(JSON.parse(localStorage.getItem(key)));
+      }
     });
-    nodesFromLocalStorage.forEach((nds) => {
-      nds.id = `node-${nodes.length + 1}`;
-      nodes.push(nds);
-      console.log(nds);
-    });
-    setNodes(nodes);
+
+    setEdges(edgesFromStorage);
+    setNodes(nodesFromStorage);
   };
 
   const handleCopy = () => {
     let elem = document.createElement("textarea");
     document.body.appendChild(elem);
-    elem.value = JSON.stringify(nodes);
+    elem.value = JSON.stringify([nodes, edges]);
     elem.select();
     document.execCommand("copy");
     document.body.removeChild(elem);
     alert("Diagram Successfully Copied To Clipboard ☑️");
+  };
+
+  const handlePaste = () => {
+    let elem2 = document.createElement("textarea");
+    elem2.classList.add("elem2");
+    elem2.addEventListener("change", (e) => {
+      updateState(e);
+    });
+    let nav = document.querySelector(".nav");
+    nav.appendChild(elem2);
+    console.log(nav);
+  };
+
+  const updateState = (e) => {
+    try {
+      setNodes(JSON.parse(e.target.value)[0]);
+      setEdges(JSON.parse(e.target.value)[1]);
+    } catch (e) {
+      console.log(e);
+    }
+    let nav = document.querySelector(".nav");
+    let elem2 = document.querySelector(".elem2");
+    nav.removeChild(elem2);
   };
 
   const createTable = () => {
@@ -100,6 +146,7 @@ const Console = () => {
       type: "umlDiagram",
       position: { x: 10, y: 10 },
       data: {
+        objectName: "Object Name",
         color: getRandomColor(),
         gridTable: [{ visibility: "+", signature: "", type: "" }],
       },
@@ -119,8 +166,11 @@ const Console = () => {
       <section style={{ margin: "0% 20%" }}>
         <Navbar
           onCreateTable={() => createTable()}
-          onDownloadDiagram={() => printDiagram()}
-          onSaveDiagram={() => handleCopy()}
+          onDownloadDiagram={() => loadNodesFromLocalStorage()}
+          onSaveDiagram={() => handleSave()}
+          onCopyDiagram={() => handleCopy()}
+          onPasteDiagram={() => handlePaste()}
+          onPrintDiagram={() => printDiagram()}
         />
       </section>
 
