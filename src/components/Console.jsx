@@ -42,7 +42,14 @@ const initialNodes = [
       objectName: "Object Name",
       color: getRandomColor(),
       comment: "Object Description",
-      gridTable: [{ visibility: "+", signature: "", type: "", comment:"signature description" }],
+      gridTable: [
+        {
+          visibility: "+",
+          signature: "",
+          type: "",
+          comment: "signature description",
+        },
+      ],
       connection: false,
     },
   },
@@ -152,8 +159,16 @@ const Console = () => {
       position: { x: 10, y: 10 },
       data: {
         objectName: "Object Name",
+        comment: "Object Description",
         color: getRandomColor(),
-        gridTable: [{ visibility: "+", signature: "", type: "" }],
+        gridTable: [
+          {
+            visibility: "+",
+            signature: "",
+            type: "",
+            comment: "signature description",
+          },
+        ],
       },
     });
     setNodes(nodes);

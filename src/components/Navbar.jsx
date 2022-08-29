@@ -55,7 +55,7 @@ const Navbar = ({
           <a
             className="avatar"
             data-tooltip="Get Python"
-            href="http://127.0.0.1:8000/draw-uml/python"
+            href="https://protocol-backend.herokuapp.com/draw-uml/python"
             download
           >
             <i className="fas fa-download fa-2x"></i>
@@ -63,7 +63,7 @@ const Navbar = ({
           <a
             className="avatar"
             data-tooltip="Get Javascript"
-            href="http://127.0.0.1:8000/draw-uml/javascript"
+            href="https://protocol-backend.herokuapp.com/draw-uml/javascript"
             download
           >
             <i className="fas fa-download fa-2x"></i>
