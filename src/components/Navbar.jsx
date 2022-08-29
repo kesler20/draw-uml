@@ -9,7 +9,7 @@ const Navbar = ({
   onDownloadDiagram,
   onCopyDiagram,
   onPrintDiagram,
-  onPasteDiagram
+  onPasteDiagram,
 }) => {
   const [sideBarView, setSideBarView] = useState([false]);
   // true if there is storage data and false if there is not
@@ -41,10 +41,7 @@ const Navbar = ({
             <i className="fas fa-trash fa-2x" onClick={handleStorage}></i>
           </div>
           <div className="avatar" data-tooltip="Load Diagram">
-            <i
-              className="fas fa-download fa-2x"
-              onClick={onDownloadDiagram}
-            ></i>
+            <i className="fas fa-upload fa-2x" onClick={onDownloadDiagram}></i>
           </div>
           <div className="avatar" data-tooltip="Copy Diagram">
             <i className="fas fa-copy fa-2x" onClick={onCopyDiagram}></i>
@@ -55,6 +52,12 @@ const Navbar = ({
           <div className="avatar" data-tooltip="Paste Diagram">
             <i className="fas fa-paste fa-2x" onClick={onPasteDiagram}></i>
           </div>
+          <a className="avatar" data-tooltip="Get Python" href={Logo} download>
+            <i className="fas fa-download fa-2x"></i>
+          </a>
+          <a className="avatar" data-tooltip="Get JS" href={Logo} download>
+            <i className="fas fa-download fa-2x"></i>
+          </a>
         </SideBar>
       );
     } else {

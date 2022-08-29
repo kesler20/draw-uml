@@ -7,6 +7,7 @@ import ReactFlow, {
   Controls,
   Background,
 } from "react-flow-renderer";
+import RESTfulApiInterface from "../APIs/RESTfulApi.js";
 import Navbar from "./Navbar.jsx";
 import UmlDiagram from "./UmlDiagram.jsx";
 
@@ -108,6 +109,9 @@ const Console = () => {
   };
 
   const handleCopy = () => {
+    const api = new RESTfulApiInterface();
+    api.putResource("draw-uml", [nodes, edges]);
+
     let elem = document.createElement("textarea");
     document.body.appendChild(elem);
     elem.value = JSON.stringify([nodes, edges]);
@@ -118,6 +122,9 @@ const Console = () => {
   };
 
   const handlePaste = () => {
+    const api = new RESTfulApiInterface();
+    console.log(api.getResource("draw-uml"));
+
     let elem2 = document.createElement("textarea");
     elem2.classList.add("elem2");
     elem2.addEventListener("change", (e) => {
