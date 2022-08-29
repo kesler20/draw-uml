@@ -41,7 +41,8 @@ const initialNodes = [
     data: {
       objectName: "Object Name",
       color: getRandomColor(),
-      gridTable: [{ visibility: "+", signature: "", type: "" }],
+      comment: "Object Description",
+      gridTable: [{ visibility: "+", signature: "", type: "", comment:"signature description" }],
       connection: false,
     },
   },
@@ -110,7 +111,7 @@ const Console = () => {
 
   const handleCopy = () => {
     const api = new RESTfulApiInterface();
-    api.putResource("draw-uml", [nodes, edges]);
+    api.putResource("draw-uml", [nodes, edges]).then((res) => console.log(res));
 
     let elem = document.createElement("textarea");
     document.body.appendChild(elem);
@@ -122,9 +123,6 @@ const Console = () => {
   };
 
   const handlePaste = () => {
-    const api = new RESTfulApiInterface();
-    console.log(api.getResource("draw-uml"));
-
     let elem2 = document.createElement("textarea");
     elem2.classList.add("elem2");
     elem2.addEventListener("change", (e) => {

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Handle, Position } from "react-flow-renderer";
+import { DesignNotes } from "./StyledElements";
 
 const findIndex = (collection, item) => {
   let i = 0;
@@ -11,10 +12,17 @@ const findIndex = (collection, item) => {
 
 const UmlDiagram = ({ data }) => {
   const [gridTable, setGridTable] = useState(data.gridTable);
+  const [viewComment, setViewComment] = useState(false);
+  const [objectComment, setObjectComment] = useState(false);
 
   const addRow = (e) => {
     let grid = data.gridTable;
-    grid.push({ visibility: "+", signature: "", type: "" });
+    grid.push({
+      visibility: "+",
+      signature: "",
+      type: "",
+      comment: "signature description",
+    });
     console.log(grid);
     let gridTable = grid;
     setGridTable({ gridTable });
@@ -41,10 +49,6 @@ const UmlDiagram = ({ data }) => {
         : e.target.parentNode.children.item(1);
     let signatureBox = umlTable.children.item(umlTable.children.length - 7);
     signatureBox.focus();
-  };
-
-  const handleConnection = (e) => {
-    console.log(data.gridTable);
   };
 
   const handleNavigation = (e) => {
@@ -93,6 +97,12 @@ const UmlDiagram = ({ data }) => {
     }
   };
 
+  const handleObjectClick = (e) => {
+    if (e.detail == 2) {
+      setObjectComment(!objectComment);
+    }
+  };
+
   return (
     <div className="diagram" style={{ top: 285, left: 534 }}>
       <div className="uml">
@@ -119,7 +129,18 @@ const UmlDiagram = ({ data }) => {
           className="object-name"
           style={{ borderTop: `25px solid ${data.color}` }}
           onKeyDown={(e) => handleNavigation(e)}
+          onClick={(e) => handleObjectClick(e)}
         />
+        {objectComment ? (
+          <DesignNotes>
+            <textarea className="class"
+              onChange={(e) => (data.comment = e.target.value)}
+              placeholder={data.comment}
+            />
+          </DesignNotes>
+        ) : (
+          <React.Fragment />
+        )}
         <div className="grid-table">
           {data.gridTable.map((inputElement) => {
             return (
@@ -139,8 +160,24 @@ const UmlDiagram = ({ data }) => {
                   onChange={(e) => (inputElement.type = e.target.value)}
                   onKeyDown={(e) => handleNavigation(e)}
                 />
-                <div className="arrowBtn" onClick={(e) => handleConnection(e)}>
-                  <i className="fas fa-plus" aria-hidden="true"></i>
+                <div className="arrowBtn">
+                  <i
+                    className="fas fa-plus"
+                    aria-hidden="true"
+                    onClick={() => setViewComment(!viewComment)}
+                  ></i>
+                  {viewComment ? (
+                    <DesignNotes>
+                      <textarea
+                        onChange={(e) =>
+                          (inputElement.comment = e.target.value)
+                        }
+                        placeholder={inputElement.comment}
+                      />
+                    </DesignNotes>
+                  ) : (
+                    <React.Fragment />
+                  )}
                 </div>
               </React.Fragment>
             );

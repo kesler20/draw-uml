@@ -52,10 +52,20 @@ const Navbar = ({
           <div className="avatar" data-tooltip="Paste Diagram">
             <i className="fas fa-paste fa-2x" onClick={onPasteDiagram}></i>
           </div>
-          <a className="avatar" data-tooltip="Get Python" href={Logo} download>
+          <a
+            className="avatar"
+            data-tooltip="Get Python"
+            href="http://127.0.0.1:8000/draw-uml/python"
+            download
+          >
             <i className="fas fa-download fa-2x"></i>
           </a>
-          <a className="avatar" data-tooltip="Get JS" href={Logo} download>
+          <a
+            className="avatar"
+            data-tooltip="Get Javascript"
+            href="http://127.0.0.1:8000/draw-uml/javascript"
+            download
+          >
             <i className="fas fa-download fa-2x"></i>
           </a>
         </SideBar>

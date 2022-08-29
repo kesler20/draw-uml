@@ -15,10 +15,11 @@ export const UmlDiagram = styled.div`
 export const DesignNotes = styled.div`
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 130%;
   background-color: white;
-  height: 350px;
-  width: 500px;
+  box-shadow: 2px 3px 17px rgb(200, 200, 200);
+  height: 300px;
+  width: 300px;
   transform: translate(-50%, -50%);
   border-radius: 20px;
   display: flex;
@@ -28,5 +29,17 @@ export const DesignNotes = styled.div`
   .cross-btn {
     position: absolute;
     transform: translate(750%, -400%) rotate(45deg);
+  }
+  textarea {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: 1px solid #aa5df2;
+  }
+  textarea.class {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: 1px solid rgb(0,100,200);
   }
 `;

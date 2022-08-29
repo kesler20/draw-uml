@@ -34,7 +34,7 @@ export default class RESTfulApiInterface {
    * @param {*} body - has to be a stringified serializable JSON string, use ``JSON.stringify(param)``
    */
   async HTTPcall(URL, method, body) {
-    let statusCode = 0;
+    let response = {}
     const HTTPRequest = this.activateTestMode ? testFetch : fetch;
     if (body === undefined) {
       await HTTPRequest(URL, {
@@ -44,17 +44,17 @@ export default class RESTfulApiInterface {
         method: method,
       })
         .then((res) => {
-          statusCode = res.status;
+          response.statusCode = res.status
           return res.json();
         })
         .then((res) => {
+          response.resource = res
           let _ = this.activateTestMode
             ? ""
             : console.log(`${method} ${URL} backend response`, res);
-          return { resource: res, statusCode };
-        });
-    } else {
-      await HTTPRequest(URL, {
+          });
+        } else {
+          await HTTPRequest(URL, {
         headers: new Headers({
           "X-JWT": this.jwtToken,
         }),
@@ -64,11 +64,12 @@ export default class RESTfulApiInterface {
         let _ = this.activateTestMode
           ? ""
           : console.log(`${method} ${URL} backend response`, res);
-        return res.status;
+          response.statusCode = res.status;
       });
     }
+    return response;
   }
-
+  
   /**
    * This will send an HTTP PUT request to the ``baseUrl/resourceEndpoint/CREATE`` endpoint
    * The HTTP PUT request method creates a new resource or replaces a representation of the target resource
