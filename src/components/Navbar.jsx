@@ -55,7 +55,7 @@ const Navbar = ({
           <a
             className="avatar"
             data-tooltip="Get Python"
-            href="https://protocol-backend.herokuapp.com/draw-uml/python"
+            href="https://protocol-backend.herokuapp.com/draw-uml/python_file"
             download
           >
             <i className="fas fa-download fa-2x"></i>
@@ -63,7 +63,7 @@ const Navbar = ({
           <a
             className="avatar"
             data-tooltip="Get Javascript"
-            href="https://protocol-backend.herokuapp.com/draw-uml/javascript"
+            href="https://protocol-backend.herokuapp.com/draw-uml/javascript_file"
             download
           >
             <i className="fas fa-download fa-2x"></i>
