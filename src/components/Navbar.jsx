@@ -79,7 +79,7 @@ const Navbar = ({
         </SideBar>
       );
     } else {
-      return "";
+        return ""; 
     }
   };
   return (
