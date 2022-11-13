@@ -21,7 +21,7 @@ import testFetch from "../__test__/test_fetch";
  */
 export default class RESTfulApiInterface {
   constructor() {
-    this.baseUrl = `${process.env.REACT_APP_BACKEND_URL_DEV}`;
+    this.baseUrl = `${process.env.REACT_APP_BACKEND_URL_PROD}`;
     this.jwtToken = "Bearer " + localStorage.getItem("jwtToken");
     this.activateTestMode = false;
   }

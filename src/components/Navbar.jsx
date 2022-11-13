@@ -55,7 +55,7 @@ const Navbar = ({
           <a
             className="avatar"
             data-tooltip="Get Python"
-            href={`${process.env.REACT_APP_BACKEND_URL_DEV}/draw-uml/python_file`}
+            href={`${process.env.REACT_APP_BACKEND_URL_PROD}/draw-uml/python_file`}
             download
           >
             <i className="fas fa-download fa-2x"></i>
@@ -63,7 +63,7 @@ const Navbar = ({
           <a
             className="avatar"
             data-tooltip="Get Test Python"
-            href={`${process.env.REACT_APP_BACKEND_URL_DEV}/draw-uml/python_test_file`}
+            href={`${process.env.REACT_APP_BACKEND_URL_PROD}/draw-uml/python_test_file`}
             download
           >
             <i className="fas fa-download fa-2x"></i>
@@ -71,7 +71,7 @@ const Navbar = ({
           <a
             className="avatar"
             data-tooltip="Get Javascript"
-            href={`${process.env.REACT_APP_BACKEND_URL_DEV}/draw-uml/javascript_file`}
+            href={`${process.env.REACT_APP_BACKEND_URL_PROD}/draw-uml/javascript_file`}
             download
           >
             <i className="fas fa-download fa-2x"></i>
