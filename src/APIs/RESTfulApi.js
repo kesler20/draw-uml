@@ -1,4 +1,3 @@
-import testFetch from "../__test__/test_fetch";
 /**
  * This is an implementation of a RESTful Api using the fetch api
  *
@@ -35,9 +34,8 @@ export default class RESTfulApiInterface {
    */
   async HTTPcall(URL, method, body) {
     let response = {};
-    const HTTPRequest = this.activateTestMode ? testFetch : fetch;
     if (body === undefined) {
-      await HTTPRequest(URL, {
+      await fetch(URL, {
         headers: new Headers({
           "X-JWT": this.jwtToken,
         }),
@@ -54,7 +52,7 @@ export default class RESTfulApiInterface {
             : console.log(`${method} ${URL} backend response`, res);
         });
     } else {
-      await HTTPRequest(URL, {
+      await fetch(URL, {
         headers: new Headers({
           "X-JWT": this.jwtToken,
         }),
