@@ -1,19 +1,20 @@
 import React, { useState } from "react";
 import { Handle, Position } from "react-flow-renderer";
-import { DesignNotes } from "./StyledElements";
-
-const findIndex = (collection, item) => {
-  let i = 0;
-  for (let j of collection) {
-    if (j === item) return i;
-    i++;
-  }
-};
+import { DesignNotes } from "../components/StyledElements";
 
 const UmlDiagram = ({ data }) => {
   const [gridTable, setGridTable] = useState(data.gridTable);
   const [viewComment, setViewComment] = useState(false);
   const [objectComment, setObjectComment] = useState(false);
+  const [insertMode, setInsertMode] = useState(true);
+
+  const findIndex = (collection, item) => {
+    let i = 0;
+    for (let j of collection) {
+      if (j === item) return i;
+      i++;
+    }
+  };
 
   const addRow = (e) => {
     let grid = data.gridTable;
@@ -52,48 +53,56 @@ const UmlDiagram = ({ data }) => {
   };
 
   const handleNavigation = (e) => {
+    if (e.key === "Control") {
+      setInsertMode(!insertMode);
+    }
+    
     if (e.key === "Enter") {
       addRow(e);
     } else if (e.keyCode === 8 && e.target.value === "") {
       deleteRow(e);
-    } else if (e.key === "ArrowRight") {
-      try {
-        let nextRow = e.target.parentNode.children.item(
-          findIndex(e.target.parentNode.children, e.target) + 1
-        );
-        nextRow.focus();
-      } catch (e) {
-        console.log(e);
-      }
-    } else if (e.key === "ArrowLeft") {
-      try {
-        let nextRow = e.target.parentNode.children.item(
-          findIndex(e.target.parentNode.children, e.target) - 1
-        );
-        nextRow.focus();
-      } catch (e) {
-        console.log(e);
-      }
-    } else if (e.key === "ArrowUp") {
-      try {
-        let nextRow = e.target.parentNode.children.item(
-          findIndex(e.target.parentNode.children, e.target) - 4
-        );
-        nextRow.focus();
-      } catch (e) {
-        console.log(e);
-      }
-    } else if (e.key === "ArrowDown") {
-      try {
-        let nextRow = e.target.parentNode.children.item(
-          findIndex(e.target.parentNode.children, e.target) + 4
-        );
-        nextRow.focus();
-      } catch (e) {
-        console.log(e);
-      }
     } else {
-      console.log(e.key);
+      if (!insertMode) {
+        if (e.key === "ArrowRight") {
+          try {
+            let nextRow = e.target.parentNode.children.item(
+              findIndex(e.target.parentNode.children, e.target) + 1
+            );
+            nextRow.focus();
+          } catch (e) {
+            console.log(e);
+          }
+        } else if (e.key === "ArrowLeft") {
+          try {
+            let nextRow = e.target.parentNode.children.item(
+              findIndex(e.target.parentNode.children, e.target) - 1
+            );
+            nextRow.focus();
+          } catch (e) {
+            console.log(e);
+          }
+        } else if (e.key === "ArrowUp") {
+          try {
+            let nextRow = e.target.parentNode.children.item(
+              findIndex(e.target.parentNode.children, e.target) - 4
+            );
+            nextRow.focus();
+          } catch (e) {
+            console.log(e);
+          }
+        } else if (e.key === "ArrowDown") {
+          try {
+            let nextRow = e.target.parentNode.children.item(
+              findIndex(e.target.parentNode.children, e.target) + 4
+            );
+            nextRow.focus();
+          } catch (e) {
+            console.log(e);
+          }
+        } else {
+          console.log(e.key);
+        }
+      }
     }
   };
 
@@ -133,7 +142,8 @@ const UmlDiagram = ({ data }) => {
         />
         {objectComment ? (
           <DesignNotes>
-            <textarea className="class"
+            <textarea
+              className="class"
               onChange={(e) => (data.comment = e.target.value)}
               placeholder={data.comment}
             />

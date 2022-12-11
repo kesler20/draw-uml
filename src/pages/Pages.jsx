@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Console from "../components/Console";
+import Console from "../containers/Console";
 
 const Pages = () => {
   return (
