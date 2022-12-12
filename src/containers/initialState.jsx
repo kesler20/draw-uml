@@ -1,4 +1,3 @@
-
 export const getRandomNumber = (maxNum) => {
   return Math.floor(Math.random() * maxNum);
 };
@@ -26,8 +25,9 @@ export const initialNodes = [
         {
           visibility: "+",
           signature: "",
-          type: "",
+          returnType: "",
           comment: "signature description",
+          params: [{ name: "name", type: "type" }],
         },
       ],
       connection: false,

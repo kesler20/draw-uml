@@ -20,6 +20,11 @@ body {
   height: 95vh;
 }
 
+hr {
+  border: 1px solid #d5d3d7;
+  width: 100%;
+}
+
 h1 {
   text-align: center;
   margin-top: 10%;
@@ -53,6 +58,20 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.flex-row-start {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  width: 95%;
+}
+
+.flex-row-around {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .flex-column {
@@ -90,6 +109,10 @@ p {
     rgb(155, 209, 157) 0%,
     rgb(142, 226, 243) 100%
   );
+}
+
+.margin-small {
+  margin: 10px 0px;
 }
 
 .grid {

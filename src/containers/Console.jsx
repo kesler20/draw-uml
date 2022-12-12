@@ -59,8 +59,9 @@ const Console = () => {
             {
               visibility: "+",
               signature: "",
-              type: "",
+              returnType: "",
               comment: "signature description",
+              params: [{ name: "name", type: "type" }],
             },
           ],
         },
@@ -76,7 +77,6 @@ const Console = () => {
           onCopyDiagram={handleCopy}
         />
       </section>
-
       <section style={{ margin: "0% 2%" }}>
         <div className="functions-list"></div>
         <div className="data-model-canvas">
