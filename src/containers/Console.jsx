@@ -44,6 +44,29 @@ const Console = () => {
     alert("Diagram Successfully Copied To Clipboard ☑️");
   };
 
+  const handlePaste = () => {
+    let elem2 = document.createElement("textarea");
+    elem2.classList.add("elem2");
+    elem2.addEventListener("change", (e) => {
+      updateState(e);
+    });
+    let nav = document.querySelector(".nav");
+    nav.appendChild(elem2);
+    console.log(nav);
+  };
+
+  const updateState = (e) => {
+    try {
+      setNodes(JSON.parse(e.target.value)[0]);
+      setEdges(JSON.parse(e.target.value)[1]);
+    } catch (e) {
+      console.log(e);
+    }
+    let nav = document.querySelector(".nav");
+    let elem2 = document.querySelector(".elem2");
+    nav.removeChild(elem2);
+  };
+
   const createTable = () => {
     setNodes((prevNodes) => [
       ...prevNodes,
@@ -75,6 +98,7 @@ const Console = () => {
         <NavbarComponent
           onCreateTable={createTable}
           onCopyDiagram={handleCopy}
+          onPasteDiagram={handlePaste}
         />
       </section>
       <section style={{ margin: "0% 2%" }}>

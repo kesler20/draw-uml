@@ -3,7 +3,7 @@ import Logo from "../assets/logo.svg";
 import { useState } from "react";
 import { HamburgerMenu, NavBar, SiteTitle, Version, SideBar } from "./StyledElements";
 
-const NavbarComponent = ({ onCreateTable, onCopyDiagram }) => {
+const NavbarComponent = ({ onCreateTable, onCopyDiagram, onPasteDiagram }) => {
   
   const [sideBarView, setSideBarView] = useState([false]);
 
@@ -18,6 +18,9 @@ const NavbarComponent = ({ onCreateTable, onCopyDiagram }) => {
         <SideBar style={{ margin: "10px", color: "#e17bef" }}>
           <div className="avatar" data-tooltip="Copy Diagram">
             <i className="fas fa-copy fa-2x" onClick={onCopyDiagram}></i>
+          </div>
+          <div className="avatar" data-tooltip="Paste Diagram">
+            <i className="fas fa-paste fa-2x" onClick={onPasteDiagram}></i>
           </div>
           <a
             className="avatar"

@@ -1,23 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { DesignNotes } from "./StyledElements";
 import { Badge } from "./StyledElements";
+import { findIndex } from "../utils/Utils";
 
 const ModalCard = (props) => {
-  const [params, setParams] = useState(props.rowData.params);
 
-  useEffect(() => {
-    console.log(props)
-  })
-  const findIndex = (collection, item) => {
-    let i = 0;
-    for (let j of collection) {
-      if (j === item) return i;
-      i++;
-    }
-  };
+  const [params, setParams] = useState(
+    props.gridTable[props.currentRowIndex].params
+  );
+  
+  const [signatureComment, setSignatureComment] = useState(
+    props.gridTable[props.currentRowIndex].comment
+  );
 
+  /**
+   * handle the navigation by focusing the right input element depending on
+   * the targeted input element and the key that has been pressed
+   * @param {*} e - onKeyPressed event from the input element
+   */
   const handleNavigation = (e) => {
-    let next;
+    // initialize next which is the next HTMLelement which we want to focus
+    // (we are going to call the .focus method on it)
+    // the following code block will therefore follow the following structure
+    // if (we are in the left input element of the card && the key pressed is the ArrowRight)
+    // then next is the right inputElement
+    let next = { focus: () => "placeholder" };
     if (
       e.target === e.target.parentNode.children.item(0) &&
       e.key === "ArrowRight"
@@ -29,14 +36,19 @@ const ModalCard = (props) => {
     ) {
       next = e.target.parentNode.children.item(0);
     } else if (e.key === "ArrowDown") {
+      // first find the row in which the input elements are targeted
       let nextF = findIndex(
         e.target.parentNode.parentNode.children,
         e.target.parentNode
       );
+      // then next will be the HTML element in the n + 1 row
+      // and you can decide to focus on the right or the left one
+      // depending on whether the starting one is even or odd
       next = e.target.parentNode.parentNode.children
         .item(nextF + 1)
         .children.item(nextF % 2 === 0 ? 0 : 1);
     } else if (e.key === "ArrowUp") {
+      // algorithm to move the focus up similar to the one to move it down
       let nextF = findIndex(
         e.target.parentNode.parentNode.children,
         e.target.parentNode
@@ -45,20 +57,13 @@ const ModalCard = (props) => {
         .item(nextF - 1)
         .children.item(nextF % 2 === 0 ? 0 : 1);
     } else if (e.key === "Backspace") {
-      setParams((prevParams) =>
-        prevParams.filter(
-          (param) => prevParams.indexOf(param) == prevParams.length - 1
-        )
-      );
-      props.onChangeParams(params, props.index);
+      if (e.target.value === "") {
+        deleteRow();
+      }
     } else if (e.key === "Enter") {
-      setParams((prevParams) => [
-        ...prevParams,
-        { name: "name", type: "type" },
-      ]);
-      props.onChangeParams(params, props.index);
+      addRow();
     } else {
-      console.log(e.key);
+      next = { focus: () => "placeholder" };
     }
     try {
       next.focus();
@@ -67,14 +72,54 @@ const ModalCard = (props) => {
     }
   };
 
-  const onBtnClicked = () => {
+  const addRow = () => {
+    props.updateParams([...params, { name: "name", type: "type" }]);
     setParams((prevParams) => [...prevParams, { name: "name", type: "type" }]);
-    props.onChangeParams(params, props.index);
+  };
+
+  const deleteRow = () => {
+    props.updateParams(
+      params.filter((param) => params.indexOf(param) == prevParams.length - 1)
+    );
+    setParams((prevParams) =>
+      prevParams.filter(
+        (param) => prevParams.indexOf(param) == prevParams.length - 1
+      )
+    );
+  };
+
+  const updateParamNameView = (name, paramIndex) => {
+    props.updateParamName(name, paramIndex);
+    setParams((prevParams) => {
+      return prevParams.map((param, index) => {
+        if (index === paramIndex) {
+          param.name = name;
+        }
+        return param;
+      });
+    });
+  };
+
+  const updateParamTypeView = (type, paramIndex) => {
+    props.updateParamType(type, paramIndex);
+    setParams((prevParams) => {
+      return prevParams.map((param, index) => {
+        if (index === paramIndex) {
+          param.type = type;
+        }
+        return param;
+      });
+    });
+  };
+
+  const updateSignatureCommentView = (comment) => {
+    props.updateSignatureComment(comment);
+    setSignatureComment(comment);
   };
 
   return (
     <DesignNotes>
-      <h3>{props.objectData.objectName}</h3>
+      <h3>{props.objectName}</h3>
       <div class="flex-row-start">
         <Badge>
           <img
@@ -88,8 +133,8 @@ const ModalCard = (props) => {
       </div>
       <textarea
         className="class"
-        placeholder={props.objectData.comment}
-        onChange={(e) => props.onChangeObjectComment(e.target.value)}
+        value={props.objectComment}
+        onChange={(e) => props.updateObjectComment(e.target.value)}
       />
       <div class="flex-row-start">
         <Badge>
@@ -101,28 +146,30 @@ const ModalCard = (props) => {
           />
         </Badge>
         <p>
-          {props.rowData.signature === ""
+          {props.gridTable[props.currentRowIndex].signature === ""
             ? "signature"
-            : props.rowData.signature}{" "}
+            : props.gridTable[props.currentRowIndex].signature}{" "}
           params
         </p>
       </div>
       <textarea
-        onChange={(e) => console.log(e.target.value)}
-        placeholder={props.rowData.comment}
+        value={signatureComment}
+        onChange={(e) => updateSignatureCommentView(e.target.value)}
       />
       {params.map((param, index) => {
         return (
           <div key={index} className="flex-row-around margin-small">
             <input
-              placeholder={param.name}
+              value={param.name}
+              onChange={(e) => updateParamNameView(e.target.value, index)}
               onKeyDown={(e) => handleNavigation(e)}
             ></input>
             <input
-              placeholder={param.type}
+              value={param.type}
+              onChange={(e) => updateParamTypeView(e.target.value, index)}
               onKeyDown={(e) => handleNavigation(e)}
             ></input>
-            <div className="add-row-btn" onClick={onBtnClicked}>
+            <div className="add-row-btn" onClick={addRow}>
               <i className="fas fa-plus" aria-hidden="true"></i>
             </div>
           </div>
@@ -133,3 +180,5 @@ const ModalCard = (props) => {
 };
 
 export default ModalCard;
+
+//TODO: for readability the handleNavigation method can be turned into a dictionary

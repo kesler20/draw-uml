@@ -1,39 +1,14 @@
 import React, { useState } from "react";
 import { Handle, Position } from "react-flow-renderer";
 import ModalCard from "../components/ModalCard";
+import { findIndex } from "../utils/Utils";
 
 const UmlDiagram = ({ data }) => {
   const [gridTable, setGridTable] = useState(data.gridTable);
   const [objectComment, setObjectComment] = useState(data.comment);
   const [viewObjectMetadata, setViewObjectMetadata] = useState(false);
-  const [currentRow, setCurrentRow] = useState({
-    visibility: "+",
-    signature: "",
-    returnType: "",
-    comment: "signature description",
-    params: [{ name: "name", type: "type" }],
-  });
   const [currentRowIndex, setCurrentRowIndex] = useState(0);
   const [insertMode, setInsertMode] = useState(true);
-
-  const findIndex = (collection, item) => {
-    let i = 0;
-    for (let j of collection) {
-      if (j === item) return i;
-      i++;
-    }
-  };
-
-  const handleChangeParams = (params, index) => {
-    let grid = data.gridTable.map((dataGrid, i) => {
-      if (i === index) {
-        dataGrid.params == params;
-      }
-      return dataGrid;
-    });
-    let gridTable = grid;
-    setGridTable({ gridTable });
-  };
 
   const addRow = (e) => {
     let grid = data.gridTable;
@@ -44,7 +19,6 @@ const UmlDiagram = ({ data }) => {
       comment: "signature description",
       params: [{ name: "name", type: "type" }],
     });
-    console.log(grid);
     let gridTable = grid;
     setGridTable({ gridTable });
     setTimeout(() => {
@@ -53,13 +27,38 @@ const UmlDiagram = ({ data }) => {
           ? e.target.parentNode
           : e.target.parentNode.children.item(1);
       let signatureBox = umlTable.children.item(umlTable.children.length - 3);
-      console.log(signatureBox);
       signatureBox.focus();
     }, 0);
   };
 
-  const toggleModalView = (inputElement, index) => {
-    setCurrentRow(inputElement);
+  const updateObjectComment = (comment) => {
+    data.comment = comment;
+    setObjectComment(data.comment);
+  };
+
+  const updateParams = (newParams) => {
+    data.gridTable[currentRowIndex].params = newParams;
+    setGridTable(data.gridTable);
+  };
+
+  const updateSignatureComment = (comment) => {
+    data.gridTable[currentRowIndex].comment = comment;
+    setGridTable(data.gridTable);
+  };
+
+  const updateParamType = (type, paramIndex) => {
+    console.log(type);
+    data.gridTable[currentRowIndex].params[paramIndex].type = type;
+    setGridTable(data.gridTable);
+  };
+
+  const updateParamName = (name, paramIndex) => {
+    console.log(name);
+    data.gridTable[currentRowIndex].params[paramIndex].name = name;
+    setGridTable(data.gridTable);
+  };
+
+  const toggleModalView = (index) => {
     setCurrentRowIndex(index);
     setViewObjectMetadata(!viewObjectMetadata);
   };
@@ -67,7 +66,6 @@ const UmlDiagram = ({ data }) => {
   const deleteRow = (e) => {
     let grid = data.gridTable;
     grid.pop();
-    console.log(grid);
     let gridTable = grid;
     setGridTable({ gridTable });
     let umlTable =
@@ -136,11 +134,16 @@ const UmlDiagram = ({ data }) => {
     <div className="diagram" style={{ top: 285, left: 534 }}>
       {viewObjectMetadata && (
         <ModalCard
-          index={currentRowIndex}
-          onChangeParams={handleChangeParams}
-          objectData={data}
-          rowData={currentRow}
-          onChangeObjectComment={setObjectComment}
+          updateParamType={updateParamType}
+          updateParamName={updateParamName}
+          updateObjectComment={updateObjectComment}
+          updateParams={updateParams}
+          updateSignatureComment={updateSignatureComment}
+          // read only
+          objectName={data.objectName}
+          currentRowIndex={currentRowIndex}
+          objectComment={objectComment}
+          gridTable={data.gridTable}
         />
       )}
       <div className="uml">
@@ -191,7 +194,7 @@ const UmlDiagram = ({ data }) => {
                   <i
                     className="fas fa-plus"
                     aria-hidden="true"
-                    onClick={() => toggleModalView(inputElement, index)}
+                    onClick={() => toggleModalView(index)}
                   ></i>
                 </div>
               </React.Fragment>
