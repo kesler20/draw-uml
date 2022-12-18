@@ -1,15 +1,84 @@
 import React from "react";
 import Logo from "../assets/logo.svg";
-import { useState } from "react";
-import { HamburgerMenu, NavBar, SiteTitle, Version, SideBar } from "./StyledElements";
+import { useState, useEffect } from "react";
+import {
+  HamburgerMenu,
+  NavBar,
+  SiteTitle,
+  Version,
+  SideBar,
+  LinksCard,
+} from "./StyledElements";
 
 const NavbarComponent = ({ onCreateTable, onCopyDiagram, onPasteDiagram }) => {
-  
   const [sideBarView, setSideBarView] = useState([false]);
+  const [downloadableLinks, setDownloadableLinks] = useState([]);
+  const [linksView, setLinksView] = useState(false);
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_BACKEND_URL_PROD}/get/files`)
+      .then((res) => {
+        if (res.ok) {
+          return res
+            .json()
+            .then((res) => {
+              console.log(res);
+              setDownloadableLinks(res.response);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const changeBarView = () => {
     let currentView = !sideBarView;
     setSideBarView(currentView);
+  };
+
+  const handlePasteCode = () => {
+    let elem2 = document.createElement("textarea");
+    elem2.classList.add("elem2");
+    elem2.addEventListener("change", (e) => {
+      uploadCode(e);
+    });
+    let nav = document.querySelector(".nav");
+    nav.appendChild(elem2);
+    console.log(nav);
+  };
+
+  const uploadCode = (e) => {
+    const url = `${process.env.REACT_APP_BACKEND_URL_PROD}/create/existing/files`;
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify(e.target.value),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res
+            .json()
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    let nav = document.querySelector(".nav");
+    let elem2 = document.querySelector(".elem2");
+    nav.removeChild(elem2);
   };
 
   const renderSideBar = (toRender) => {
@@ -22,30 +91,20 @@ const NavbarComponent = ({ onCreateTable, onCopyDiagram, onPasteDiagram }) => {
           <div className="avatar" data-tooltip="Paste Diagram">
             <i className="fas fa-paste fa-2x" onClick={onPasteDiagram}></i>
           </div>
-          <a
+          <div
+            onClick={() => setLinksView((prevState) => !prevState)}
             className="avatar"
-            data-tooltip="Get Python"
-            href={`${process.env.REACT_APP_BACKEND_URL_PROD}/draw-uml/python_file`}
-            download
+            data-tooltip="Get Python Files"
           >
             <i className="fas fa-download fa-2x"></i>
-          </a>
-          <a
+          </div>
+          <div
+            onClick={handlePasteCode}
             className="avatar"
-            data-tooltip="Get Test Python"
-            href={`${process.env.REACT_APP_BACKEND_URL_PROD}/draw-uml/python_test_file`}
-            download
+            data-tooltip="Paste Code"
           >
             <i className="fas fa-download fa-2x"></i>
-          </a>
-          <a
-            className="avatar"
-            data-tooltip="Get Javascript"
-            href={`${process.env.REACT_APP_BACKEND_URL_PROD}/draw-uml/javascript_file`}
-            download
-          >
-            <i className="fas fa-download fa-2x"></i>
-          </a>
+          </div>
         </SideBar>
       );
     } else {
@@ -92,6 +151,29 @@ const NavbarComponent = ({ onCreateTable, onCopyDiagram, onPasteDiagram }) => {
           </svg>
         </button>
       </NavBar>
+      {linksView && (
+        <LinksCard>
+          <div
+            className="add-row-btn"
+            onClick={() => setLinksView((prevState) => !prevState)}
+          >
+            <i className="fas fa-plus" aria-hidden="true"></i>
+          </div>
+          <h3>Click on a Link</h3>
+          {downloadableLinks.map((link, index) => {
+            return (
+              <a
+                className="link"
+                key={index}
+                href={`${process.env.REACT_APP_BACKEND_URL_PROD}/get/existing/${link}`}
+                download
+              >
+                {link}
+              </a>
+            );
+          })}
+        </LinksCard>
+      )}
       <div />
       {renderSideBar(sideBarView)}
     </div>

@@ -266,6 +266,15 @@ input.object-name::placeholder {
   }
 }
 
+@keyframes grow-into-view {
+  from {
+    scale: 0;
+  }
+  to {
+    scale: 1;
+  }
+}
+
 @keyframes animate {
   0% {
     background-position: -500%;

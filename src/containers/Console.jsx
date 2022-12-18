@@ -7,7 +7,6 @@ import ReactFlow, {
   Controls,
   Background,
 } from "react-flow-renderer";
-import RESTfulApiInterface from "../apis/RESTfulApi.js";
 import UmlDiagram from "./UmlDiagram.jsx";
 import { initialEdges, initialNodes, getRandomColor } from "./initialState";
 import NavbarComponent from "../components/Navbar";
@@ -32,8 +31,29 @@ const Console = () => {
   );
 
   const handleCopy = () => {
-    const api = new RESTfulApiInterface();
-    api.putResource("draw-uml", [nodes, edges]).then((res) => console.log(res));
+    const url = `${process.env.REACT_APP_BACKEND_URL_PROD}/create/new/files`;
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify([nodes, edges]),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res
+            .json()
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     let elem = document.createElement("textarea");
     document.body.appendChild(elem);
