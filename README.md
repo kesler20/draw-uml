@@ -2,7 +2,7 @@
 
 <div style="display:flex;">
   <h1>UML Diagraming Tool</h1>
-  <img src="src\logo.svg" style="width:15%" />
+  <img src="src\assets\logo.svg" style="width:15%" />
 </div>
 
 drawUML is a UML diagraming Tool inspired by [drawSQL](https://drawsql.app/). The first version is hosted at https://www.draw-uml.co.uk and is powered by [React Flow](https://reactflow.dev/docs/guides/custom-nodes/)
