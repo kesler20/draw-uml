@@ -52,7 +52,7 @@ const NavbarComponent = ({ onCreateTable, onCopyDiagram, onPasteDiagram }) => {
   };
 
   const uploadCode = (e) => {
-    const url = `${process.env.REACT_APP_BACKEND_URL_PROD}/create/existing/files`;
+    const url = `${process.env.REACT_APP_BACKEND_URL_PROD}/create/existing/files/true`;
     fetch(url, {
       method: "POST",
       body: JSON.stringify(e.target.value),
