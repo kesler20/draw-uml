@@ -91,3 +91,4 @@ expand on the nodes
 - [ ] make the state persistent
 - [ ] the the ability to take design notes which would be persistent in local storage
 - [ ] create a function on drawUML to make a boundary around some tables to enclose systems and to select the colors of some tables to create your own legends
+- [ ] make the tests from drawuml unimplemented and implement them one after the other as the tdd cycle unfolds
