@@ -48,7 +48,6 @@ const NavbarComponent = ({ onCreateTable, onCopyDiagram, onPasteDiagram }) => {
     });
     let nav = document.querySelector(".nav");
     nav.appendChild(elem2);
-    console.log(nav);
   };
 
   const uploadCode = (e) => {

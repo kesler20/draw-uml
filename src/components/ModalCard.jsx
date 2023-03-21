@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { DesignNotes } from "./StyledElements";
 import { Badge } from "./StyledElements";
 import { findIndex } from "../utils/Utils";
+import CheckBox from "./CheckBox";
 
 const ModalCard = (props) => {
-
   const [params, setParams] = useState(
     props.gridTable[props.currentRowIndex].params
   );
-  
+
   const [signatureComment, setSignatureComment] = useState(
     props.gridTable[props.currentRowIndex].comment
   );
@@ -120,7 +120,7 @@ const ModalCard = (props) => {
   return (
     <DesignNotes>
       <h3>{props.objectName}</h3>
-      <div class="flex-row-start">
+      <div className="flex-row-start">
         <Badge>
           <img
             src="https://uploads-ssl.webflow.com/612b579592e3bf93283444b6/612b69f61d22d5ca878550af_chevron-right.svg"
@@ -136,7 +136,14 @@ const ModalCard = (props) => {
         value={props.objectComment}
         onChange={(e) => props.updateObjectComment(e.target.value)}
       />
-      <div class="flex-row-start">
+      <div className="flex-row-around">
+        <CheckBox
+          label="set dataclass"
+          checked={props.objectDataclassStatus}
+          onCheckBoxClicked={props.onCheckBoxClicked}
+        />
+      </div>
+      <div className="flex-row-start">
         <Badge>
           <img
             src="https://uploads-ssl.webflow.com/612b579592e3bf93283444b6/612b69f61d22d5ca878550af_chevron-right.svg"

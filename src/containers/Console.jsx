@@ -72,7 +72,6 @@ const Console = () => {
     });
     let nav = document.querySelector(".nav");
     nav.appendChild(elem2);
-    console.log(nav);
   };
 
   const updateState = (e) => {
@@ -98,6 +97,7 @@ const Console = () => {
           objectName: "Object Name",
           comment: "Object Description",
           color: getRandomColor(),
+          dataclass: false,
           gridTable: [
             {
               visibility: "+",

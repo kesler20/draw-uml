@@ -9,6 +9,7 @@ const UmlDiagram = ({ data }) => {
   const [viewObjectMetadata, setViewObjectMetadata] = useState(false);
   const [currentRowIndex, setCurrentRowIndex] = useState(0);
   const [insertMode, setInsertMode] = useState(true);
+  const [dataclass, setDataclass] = useState(data.dataclass);
 
   const addRow = (e) => {
     let grid = data.gridTable;
@@ -47,13 +48,11 @@ const UmlDiagram = ({ data }) => {
   };
 
   const updateParamType = (type, paramIndex) => {
-    console.log(type);
     data.gridTable[currentRowIndex].params[paramIndex].type = type;
     setGridTable(data.gridTable);
   };
 
   const updateParamName = (name, paramIndex) => {
-    console.log(name);
     data.gridTable[currentRowIndex].params[paramIndex].name = name;
     setGridTable(data.gridTable);
   };
@@ -74,6 +73,11 @@ const UmlDiagram = ({ data }) => {
         : e.target.parentNode.children.item(1);
     let signatureBox = umlTable.children.item(umlTable.children.length - 7);
     signatureBox.focus();
+  };
+
+  const updateObjectDataclassStatus = () => {
+    data.dataclass = dataclass;
+    setDataclass(prevState => !prevState);
   };
 
   const handleNavigation = (e) => {
@@ -139,11 +143,13 @@ const UmlDiagram = ({ data }) => {
           updateObjectComment={updateObjectComment}
           updateParams={updateParams}
           updateSignatureComment={updateSignatureComment}
+          onCheckBoxClicked={updateObjectDataclassStatus}
           // read only
           objectName={data.objectName}
           currentRowIndex={currentRowIndex}
           objectComment={objectComment}
           gridTable={data.gridTable}
+          objectDataclassStatus={dataclass}
         />
       )}
       <div className="uml">

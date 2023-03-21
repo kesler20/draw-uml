@@ -227,7 +227,7 @@ export const LinksCard = styled.div`
   }
 
   .add-row-btn i {
-    transform : rotate(45deg)
+    transform: rotate(45deg);
   }
 
   input {
@@ -263,4 +263,67 @@ export const LinksCard = styled.div`
     font-weight: 900;
     border-bottom: 3px solid #1b0efd;
   }
+`;
+
+export const CheckBoxElement = styled.div`
+  /* The container */
+  .container {
+    width : 190px;
+    display: flex;
+    align-items:center;
+    justify-content: space-around;
+    margin: 10px;
+    margin-bottom: 0px; 
+    cursor: pointer;
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 255, 1) 0%,
+      rgba(238, 130, 238, 1) 100%
+    );
+    background-repeat: no-repeat;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    font-weight: 900;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  /* Hide the browser's default checkbox */
+  .container input {
+    width: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  /* Create a custom checkbox */
+  .checkmark {
+    height: 25px;
+    width: 25px;
+    background-color: rgb(250, 250, 250);
+    border: rgb(209, 215, 238) solid 1px;
+    border-radius: 5px;
+    display: flex;
+    align-items:center;
+    justify-content: center;
+  }
+
+  /* On mouse-over, add a grey background color */
+  .container:hover input ~ .checkmark {
+    background-color: rgb(245, 245, 245);
+  }
+
+  /* When the checkbox is checked, add a background */
+  .container input:checked ~ .checkmark {
+    background-color: rgb(132, 74, 245);
+  }
+
+  /* Show the checkmark when checked */
+  .container input:checked ~ .checkmark:after {
+    display: block;
+  }
+
 `;

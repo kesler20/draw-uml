@@ -92,3 +92,17 @@ expand on the nodes
 - [ ] the the ability to take design notes which would be persistent in local storage
 - [ ] create a function on drawUML to make a boundary around some tables to enclose systems and to select the colors of some tables to create your own legends
 - [ ] make the tests from drawuml unimplemented and implement them one after the other as the tdd cycle unfolds
+- [ ] Look at UML dioagrams and inset what is missing such as the interface and the dataclass 
+Header of the various tables
+
+Think about developer experience to alolow the fast development of UML diagramsa make a lot of short cuts.
+
+Fix every bug try to implement tests and typescript.
+
+Add the ability to get a specific file or a folder from the system
+
+Create typescript and React components from this
+
+Create servers given the endpoints and the return forms (JSON)
+
+Refactor front end and backend

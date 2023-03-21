@@ -21,6 +21,7 @@ export const initialNodes = [
       objectName: "Object Name",
       color: getRandomColor(),
       comment: "Object Description",
+      dataclass: false,
       gridTable: [
         {
           visibility: "+",

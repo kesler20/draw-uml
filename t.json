@@ -1,0 +1,31 @@
+[
+  [
+    {
+      "id": "node-1",
+      "type": "umlDiagram",
+      "position": { "x": 76, "y": 140 },
+      "data": {
+        "objectName": "Object Name",
+        "color": "rgb(187, 40, 118)",
+        "comment": "Object Description",
+        "dataclass": false,
+        "gridTable": [
+          {
+            "visibility": "+",
+            "signature": "",
+            "returnType": "",
+            "comment": "signature description",
+            "params": [{ "name": "name", "type": "type" }]
+          }
+        ],
+        "connection": false
+      },
+      "width": 500,
+      "height": 119,
+      "selected": true,
+      "positionAbsolute": { "x": 76, "y": 140 },
+      "dragging": false
+    }
+  ],
+  []
+]
