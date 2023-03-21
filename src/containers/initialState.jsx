@@ -17,11 +17,11 @@ export const initialNodes = [
     id: "node-1",
     type: "umlDiagram",
     position: { x: 500, y: 500 },
+    dataclass: false,
     data: {
       objectName: "Object Name",
       color: getRandomColor(),
       comment: "Object Description",
-      dataclass: false,
       gridTable: [
         {
           visibility: "+",

@@ -4,11 +4,11 @@
       "id": "node-1",
       "type": "umlDiagram",
       "position": { "x": 313, "y": 229 },
+      "dataclass": true,
       "data": {
         "objectName": "Object Name",
         "color": "rgb(117, 183, 161)",
         "comment": "Object Description",
-        "dataclass": true,
         "gridTable": [
           {
             "visibility": "+",

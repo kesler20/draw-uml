@@ -3,13 +3,13 @@ import { Handle, Position } from "react-flow-renderer";
 import ModalCard from "../components/ModalCard";
 import { findIndex } from "../utils/Utils";
 
-const UmlDiagram = ({ data }) => {
+const UmlDiagram = ({ data, dataclass }) => {
   const [gridTable, setGridTable] = useState(data.gridTable);
   const [objectComment, setObjectComment] = useState(data.comment);
   const [viewObjectMetadata, setViewObjectMetadata] = useState(false);
   const [currentRowIndex, setCurrentRowIndex] = useState(0);
   const [insertMode, setInsertMode] = useState(true);
-  const [dataclass, setDataclass] = useState(data.dataclass);
+  const [objectIsDataclass, setObjectIsDataclass] = useState(dataclass);
 
   const addRow = (e) => {
     let grid = data.gridTable;
@@ -75,9 +75,9 @@ const UmlDiagram = ({ data }) => {
     signatureBox.focus();
   };
 
-  const updateObjectDataclassStatus = () => {
-    data.dataclass = !dataclass;
-    setDataclass((prevState) => !prevState);
+  const updateObjectobjectIsDataclassStatus = () => {
+    data.objectIsDataclass = !objectIsDataclass;
+    setObjectIsDataclass((prevState) => !prevState);
   };
 
   const handleNavigation = (e) => {
@@ -143,16 +143,16 @@ const UmlDiagram = ({ data }) => {
           updateObjectComment={updateObjectComment}
           updateParams={updateParams}
           updateSignatureComment={updateSignatureComment}
-          onCheckBoxClicked={updateObjectDataclassStatus}
+          onCheckBoxClicked={updateObjectobjectIsDataclassStatus}
           // read only
           objectName={data.objectName}
           currentRowIndex={currentRowIndex}
           objectComment={objectComment}
           gridTable={data.gridTable}
-          objectDataclassStatus={dataclass}
+          objectobjectIsDataclassStatus={objectIsDataclass}
         />
       )}
-      {dataclass && (
+      {objectIsDataclass && (
         <div className="object-type">
           <h2 className="object-type__header">{"<<Dataclass>>"}</h2>
         </div>
@@ -179,7 +179,7 @@ const UmlDiagram = ({ data }) => {
           placeholder={data.objectName}
           onChange={(e) => (data.objectName = e.target.value)}
           className="object-name"
-          style={{ borderTop: dataclass ? `35px solid ${data.color}` : `20px solid ${data.color}` }}
+          style={{ borderTop: objectIsDataclass ? `35px solid ${data.color}` : `20px solid ${data.color}` }}
           onKeyDown={(e) => handleNavigation(e)}
         />
         <div className="grid-table">

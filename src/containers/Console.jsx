@@ -93,11 +93,11 @@ const Console = () => {
         id: `node-${nodes.length + 1}`,
         type: "umlDiagram",
         position: { x: 10, y: 10 },
+        dataclass: false,
         data: {
           objectName: "Object Name",
           comment: "Object Description",
           color: getRandomColor(),
-          dataclass: false,
           gridTable: [
             {
               visibility: "+",
