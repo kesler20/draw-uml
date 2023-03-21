@@ -5,7 +5,7 @@ const CheckBox = (props) => {
   return (
     <CheckBoxElement>
       <label className="container">
-        <input type="checkbox" checked={"checked" ? props.clicked : ""} />
+        <input type="checkbox" checked={"checked" ? props.checked : ""} />
         <span className="checkmark" onClick={props.onCheckBoxClicked}></span>
         <p>{props.label}</p>
       </label>

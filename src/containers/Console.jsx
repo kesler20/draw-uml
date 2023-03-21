@@ -31,7 +31,7 @@ const Console = () => {
   );
 
   const handleCopy = () => {
-    const url = `${process.env.REACT_APP_BACKEND_URL_PROD}/create/new/files/true`;
+    const url = `${process.env.REACT_APP_BACKEND_URL_PROD}/v1/files/new`;
     fetch(url, {
       method: "POST",
       body: JSON.stringify([nodes, edges]),

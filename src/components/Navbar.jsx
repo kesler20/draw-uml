@@ -16,7 +16,7 @@ const NavbarComponent = ({ onCreateTable, onCopyDiagram, onPasteDiagram }) => {
   const [linksView, setLinksView] = useState(false);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL_PROD}/get/files`)
+    fetch(`${process.env.REACT_APP_BACKEND_URL_PROD}/v1/files`)
       .then((res) => {
         if (res.ok) {
           return res
@@ -51,7 +51,7 @@ const NavbarComponent = ({ onCreateTable, onCopyDiagram, onPasteDiagram }) => {
   };
 
   const uploadCode = (e) => {
-    const url = `${process.env.REACT_APP_BACKEND_URL_PROD}/create/existing/files/true`;
+    const url = `${process.env.REACT_APP_BACKEND_URL_PROD}/v1/files/existing`;
     fetch(url, {
       method: "POST",
       body: JSON.stringify(e.target.value),

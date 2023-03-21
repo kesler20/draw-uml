@@ -76,8 +76,8 @@ const UmlDiagram = ({ data }) => {
   };
 
   const updateObjectDataclassStatus = () => {
-    data.dataclass = dataclass;
-    setDataclass(prevState => !prevState);
+    data.dataclass = !dataclass;
+    setDataclass((prevState) => !prevState);
   };
 
   const handleNavigation = (e) => {
@@ -152,6 +152,11 @@ const UmlDiagram = ({ data }) => {
           objectDataclassStatus={dataclass}
         />
       )}
+      {dataclass && (
+        <div className="object-type">
+          <h2 className="object-type__header">{"<<Dataclass>>"}</h2>
+        </div>
+      )}
       <div className="uml">
         {data.gridTable.map((i, index) => {
           let offSet = index * 50 + 100;
@@ -174,7 +179,7 @@ const UmlDiagram = ({ data }) => {
           placeholder={data.objectName}
           onChange={(e) => (data.objectName = e.target.value)}
           className="object-name"
-          style={{ borderTop: `25px solid ${data.color}` }}
+          style={{ borderTop: dataclass ? `35px solid ${data.color}` : `20px solid ${data.color}` }}
           onKeyDown={(e) => handleNavigation(e)}
         />
         <div className="grid-table">

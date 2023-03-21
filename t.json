@@ -3,12 +3,12 @@
     {
       "id": "node-1",
       "type": "umlDiagram",
-      "position": { "x": 76, "y": 140 },
+      "position": { "x": 313, "y": 229 },
       "data": {
         "objectName": "Object Name",
-        "color": "rgb(187, 40, 118)",
+        "color": "rgb(117, 183, 161)",
         "comment": "Object Description",
-        "dataclass": false,
+        "dataclass": true,
         "gridTable": [
           {
             "visibility": "+",
@@ -23,7 +23,7 @@
       "width": 500,
       "height": 119,
       "selected": true,
-      "positionAbsolute": { "x": 76, "y": 140 },
+      "positionAbsolute": { "x": 313, "y": 229 },
       "dragging": false
     }
   ],

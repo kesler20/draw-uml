@@ -172,6 +172,17 @@ input.object-name::placeholder {
   color: whitesmoke;
 }
 
+
+.object-type {
+  position: relative;
+}
+
+.object-type__header {
+  position: absolute;
+  left: 25%;
+  color: lavender;
+}
+
 /*--------------------------------------------------Site Info -------------------------*/
 
 .site-info {
