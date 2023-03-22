@@ -164,7 +164,7 @@ const NavbarComponent = ({ onCreateTable, onCopyDiagram, onPasteDiagram }) => {
               <a
                 className="link"
                 key={index}
-                href={`${process.env.REACT_APP_BACKEND_URL_PROD}/get/existing/${link}`}
+                href={`${process.env.REACT_APP_BACKEND_URL_PROD}/v1/files/${link}`}
                 download
               >
                 {link}
