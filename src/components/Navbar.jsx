@@ -82,7 +82,7 @@ const NavbarComponent = ({ onCreateTable, onCopyDiagram, onPasteDiagram }) => {
     });
 
     await fetch(
-      "https://draw-uml-backend-production.up.railway.app/v1/servers",
+      `${process.env.REACT_APP_BACKEND_URL_PROD}/v1/servers`,
       {
         method: "POST",
         body: fd,
