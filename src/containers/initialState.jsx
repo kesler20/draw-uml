@@ -17,8 +17,8 @@ export const initialNodes = [
     id: "node-1",
     type: "umlDiagram",
     position: { x: 500, y: 500 },
-    dataclass: false,
     data: {
+      dataclass: false,
       objectName: "Object Name",
       color: getRandomColor(),
       comment: "Object Description",
@@ -28,7 +28,7 @@ export const initialNodes = [
           signature: "",
           returnType: "",
           comment: "signature description",
-          params: [{ name: "name", type: "type" }],
+          params: [{ name: "name", type: "str" , comment : "parameter comment" }],
         },
       ],
       connection: false,

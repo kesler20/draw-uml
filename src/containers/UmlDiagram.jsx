@@ -3,13 +3,13 @@ import { Handle, Position } from "react-flow-renderer";
 import ModalCard from "../components/ModalCard";
 import { findIndex } from "../utils/Utils";
 
-const UmlDiagram = ({ data, dataclass }) => {
+const UmlDiagram = ({ data }) => {
   const [gridTable, setGridTable] = useState(data.gridTable);
   const [objectComment, setObjectComment] = useState(data.comment);
   const [viewObjectMetadata, setViewObjectMetadata] = useState(false);
   const [currentRowIndex, setCurrentRowIndex] = useState(0);
   const [insertMode, setInsertMode] = useState(true);
-  const [objectIsDataclass, setObjectIsDataclass] = useState(dataclass);
+  const [objectIsDataclass, setObjectIsDataclass] = useState(data.dataclass);
 
   const addRow = (e) => {
     let grid = data.gridTable;
@@ -18,7 +18,7 @@ const UmlDiagram = ({ data, dataclass }) => {
       signature: "",
       returnType: "",
       comment: "signature description",
-      params: [{ name: "name", type: "type" }],
+      params: [{ name: "name", type: "str", comment: "parameter comment" }],
     });
     let gridTable = grid;
     setGridTable({ gridTable });
@@ -57,6 +57,11 @@ const UmlDiagram = ({ data, dataclass }) => {
     setGridTable(data.gridTable);
   };
 
+  const updateParamComment = (comment, paramIndex) => {
+    data.gridTable[currentRowIndex].params[paramIndex].comment = comment;
+    setGridTable(data.gridTable);
+  };
+
   const toggleModalView = (index) => {
     setCurrentRowIndex(index);
     setViewObjectMetadata(!viewObjectMetadata);
@@ -76,8 +81,8 @@ const UmlDiagram = ({ data, dataclass }) => {
   };
 
   const updateObjectobjectIsDataclassStatus = () => {
-    data.objectIsDataclass = !objectIsDataclass;
-    setObjectIsDataclass((prevState) => !prevState);
+    data.dataclass = !objectIsDataclass;
+    setObjectIsDataclass(data.dataclass);
   };
 
   const handleNavigation = (e) => {
@@ -140,6 +145,7 @@ const UmlDiagram = ({ data, dataclass }) => {
         <ModalCard
           updateParamType={updateParamType}
           updateParamName={updateParamName}
+          updateParamComment={updateParamComment}
           updateObjectComment={updateObjectComment}
           updateParams={updateParams}
           updateSignatureComment={updateSignatureComment}
@@ -149,7 +155,7 @@ const UmlDiagram = ({ data, dataclass }) => {
           currentRowIndex={currentRowIndex}
           objectComment={objectComment}
           gridTable={data.gridTable}
-          objectobjectIsDataclassStatus={objectIsDataclass}
+          objectDataclassStatus={objectIsDataclass}
         />
       )}
       {objectIsDataclass && (
@@ -179,7 +185,11 @@ const UmlDiagram = ({ data, dataclass }) => {
           placeholder={data.objectName}
           onChange={(e) => (data.objectName = e.target.value)}
           className="object-name"
-          style={{ borderTop: objectIsDataclass ? `35px solid ${data.color}` : `20px solid ${data.color}` }}
+          style={{
+            borderTop: objectIsDataclass
+              ? `35px solid ${data.color}`
+              : `20px solid ${data.color}`,
+          }}
           onKeyDown={(e) => handleNavigation(e)}
         />
         <div className="grid-table">

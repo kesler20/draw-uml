@@ -93,8 +93,8 @@ const Console = () => {
         id: `node-${nodes.length + 1}`,
         type: "umlDiagram",
         position: { x: 10, y: 10 },
-        dataclass: false,
         data: {
+          dataclass: false,
           objectName: "Object Name",
           comment: "Object Description",
           color: getRandomColor(),
@@ -104,7 +104,7 @@ const Console = () => {
               signature: "",
               returnType: "",
               comment: "signature description",
-              params: [{ name: "name", type: "type" }],
+              params: [{ name: "name", type: "str", comment : "parameter comment" }],
             },
           ],
         },
