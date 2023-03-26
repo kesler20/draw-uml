@@ -13,7 +13,10 @@ import {
 const NavbarComponent = ({ onCreateTable, onCopyDiagram, onPasteDiagram }) => {
   const [sideBarView, setSideBarView] = useState([false]);
   const [downloadableLinks, setDownloadableLinks] = useState([]);
+  const [downloadableServerLinks, setDownloadableServerLinks] = useState([]);
   const [linksView, setLinksView] = useState(false);
+  const [linksServerView, setLinksServerView] = useState(false);
+  const [viewFileUpload, setViewFileUpload] = useState(false);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_BACKEND_URL_PROD}/v1/files`)
@@ -24,6 +27,26 @@ const NavbarComponent = ({ onCreateTable, onCopyDiagram, onPasteDiagram }) => {
             .then((res) => {
               console.log(res);
               setDownloadableLinks(res.response);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_BACKEND_URL_PROD}/v1/servers`)
+      .then((res) => {
+        if (res.ok) {
+          return res
+            .json()
+            .then((res) => {
+              console.log(res);
+              setDownloadableServerLinks(res.response);
             })
             .catch((err) => {
               console.log(err);
@@ -48,6 +71,33 @@ const NavbarComponent = ({ onCreateTable, onCopyDiagram, onPasteDiagram }) => {
     });
     let nav = document.querySelector(".nav");
     nav.appendChild(elem2);
+  };
+
+  const uploadSQLCode = async (e) => {
+    const fd = new FormData();
+
+    // add all selected files
+    Array.from(e.target.files).forEach((file) => {
+      fd.append("draw_sql_code", file, file.name);
+    });
+
+    await fetch(
+      "https://draw-uml-backend-production.up.railway.app/v1/servers",
+      {
+        method: "POST",
+        body: fd,
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          console.log(res);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+      alert("File uploaded successfully ☑️")
   };
 
   const uploadCode = (e) => {
@@ -95,7 +145,7 @@ const NavbarComponent = ({ onCreateTable, onCopyDiagram, onPasteDiagram }) => {
             className="avatar"
             data-tooltip="Get Python Files"
           >
-            <i className="fas fa-download fa-2x"></i>
+            <i className="fas fa-upload fa-2x"></i>
           </div>
           <div
             onClick={handlePasteCode}
@@ -103,6 +153,20 @@ const NavbarComponent = ({ onCreateTable, onCopyDiagram, onPasteDiagram }) => {
             data-tooltip="Paste Code"
           >
             <i className="fas fa-download fa-2x"></i>
+          </div>
+          <div
+            onClick={() => setViewFileUpload((prevState) => !prevState)}
+            className="avatar"
+            data-tooltip="SQL Upload"
+          >
+            <i className="fas fa-database fa-2x"></i>
+          </div>
+          <div
+            onClick={() => setLinksServerView((prevState) => !prevState)}
+            className="avatar"
+            data-tooltip="Get server"
+          >
+            <i className="fas fa-server fa-2x"></i>
           </div>
         </SideBar>
       );
@@ -173,8 +237,38 @@ const NavbarComponent = ({ onCreateTable, onCopyDiagram, onPasteDiagram }) => {
           })}
         </LinksCard>
       )}
+      {linksServerView && (
+        <LinksCard>
+          <div
+            className="add-row-btn"
+            onClick={() => setLinksServerView((prevState) => !prevState)}
+          >
+            <i className="fas fa-plus" aria-hidden="true"></i>
+          </div>
+          <h3>Click on a Link</h3>
+          {downloadableServerLinks.map((link, index) => {
+            return (
+              <a
+                className="link"
+                key={index}
+                href={`${process.env.REACT_APP_BACKEND_URL_PROD}/v1/servers/${link}`}
+                download
+              >
+                {link}
+              </a>
+            );
+          })}
+        </LinksCard>
+      )}
       <div />
       {renderSideBar(sideBarView)}
+      {viewFileUpload && (
+        <input
+          type="file"
+          onChange={uploadSQLCode}
+          style={{ margin: "5px", border: "1px solid rgb(130,71,246)" }}
+        />
+      )}
     </div>
   );
 };
