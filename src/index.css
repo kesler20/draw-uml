@@ -21,7 +21,7 @@ body {
 }
 
 hr {
-  border: 1px solid #d5d3d7;
+  border: 0.5px ridge rgb(209, 146,245);
   width: 100%;
 }
 

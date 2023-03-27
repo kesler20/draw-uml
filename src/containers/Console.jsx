@@ -104,7 +104,7 @@ const Console = () => {
               signature: "",
               returnType: "",
               comment: "signature description",
-              params: [{ name: "name", type: "str", comment : "parameter comment" }],
+              params: [{ name: "name", type: "str", comment : ["parameter comment","return comment"] }],
             },
           ],
         },

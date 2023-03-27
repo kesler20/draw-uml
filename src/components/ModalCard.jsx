@@ -73,8 +73,22 @@ const ModalCard = (props) => {
   };
 
   const addRow = () => {
-    props.updateParams([...params, { name: "name", type: "str", comment : "parameter comment" }]);
-    setParams((prevParams) => [...prevParams, { name: "name", type: "str", comment : "parameter comment" }]);
+    props.updateParams([
+      ...params,
+      {
+        name: "name",
+        type: "str",
+        comment: ["parameter comment", "return comment"],
+      },
+    ]);
+    setParams((prevParams) => [
+      ...prevParams,
+      {
+        name: "name",
+        type: "str",
+        comment: ["parameter comment", "return comment"],
+      },
+    ]);
   };
 
   const deleteRow = () => {
@@ -100,12 +114,12 @@ const ModalCard = (props) => {
     });
   };
 
-  const updateParamCommentView = (comment, paramIndex) => {
-    props.updateParamComment(comment, paramIndex);
+  const updateParamCommentView = (comment, paramIndex, commentType) => {
+    props.updateParamComment(comment, paramIndex, commentType);
     setParams((prevParams) => {
       return prevParams.map((param, index) => {
         if (index === paramIndex) {
-          param.comment = comment;
+          param.comment[commentType] = comment;
         }
         return param;
       });
@@ -178,6 +192,7 @@ const ModalCard = (props) => {
       {params.map((param, index) => {
         return (
           <>
+            <hr style={{marginTop: "15px"}}/>
             <div key={index} className="flex-row-around margin-small">
               <input
                 value={param.name}
@@ -193,11 +208,22 @@ const ModalCard = (props) => {
                 <i className="fas fa-plus" aria-hidden="true"></i>
               </div>
             </div>
-            <input
-              style={{ width: "260px" }}
-              value={param.comment}
-              onChange={(e) => updateParamCommentView(e.target.value, index)}
-            />
+            <div className="flex-row-around margin-small">
+              <input
+                style={{ width: "125px" }}
+                value={param.comment[0]}
+                onChange={(e) =>
+                  updateParamCommentView(e.target.value, index, 0)
+                }
+              />
+              <input
+                style={{ width: "125px" }}
+                value={param.comment[1]}
+                onChange={(e) =>
+                  updateParamCommentView(e.target.value, index, 1)
+                }
+              />
+            </div>
           </>
         );
       })}

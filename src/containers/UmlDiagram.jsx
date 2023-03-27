@@ -18,7 +18,7 @@ const UmlDiagram = ({ data }) => {
       signature: "",
       returnType: "",
       comment: "signature description",
-      params: [{ name: "name", type: "str", comment: "parameter comment" }],
+      params: [{ name: "name", type: "str", comment: ["parameter comment","return comment"] }],
     });
     let gridTable = grid;
     setGridTable({ gridTable });
@@ -57,8 +57,8 @@ const UmlDiagram = ({ data }) => {
     setGridTable(data.gridTable);
   };
 
-  const updateParamComment = (comment, paramIndex) => {
-    data.gridTable[currentRowIndex].params[paramIndex].comment = comment;
+  const updateParamComment = (comment, paramIndex, commentType) => {
+    data.gridTable[currentRowIndex].params[paramIndex].comment[commentType] = comment;
     setGridTable(data.gridTable);
   };
 

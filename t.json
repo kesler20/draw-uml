@@ -3,38 +3,33 @@
     {
       "id": "node-1",
       "type": "umlDiagram",
-      "position": { "x": 226, "y": 300 },
+      "position": { "x": 229, "y": 311 },
       "data": {
         "dataclass": true,
-        "objectName": "Tee",
-        "color": "rgb(48, 39, 157)",
+        "objectName": "Object Name",
+        "color": "rgb(134, 108, 139)",
         "comment": "Object Description",
         "gridTable": [
           {
             "visibility": "+",
-            "signature": "qeq",
-            "returnType": "int",
+            "signature": "",
+            "returnType": "",
             "comment": "signature description",
             "params": [
-              { "name": "name", "type": "str", "comment": "parameter comment" }
-            ]
-          },
-          {
-            "visibility": "+",
-            "signature": "pop",
-            "returnType": "str",
-            "comment": "signature description",
-            "params": [
-              { "name": "name", "type": "str", "comment": "parameter comment" }
+              {
+                "name": "name",
+                "type": "str",
+                "comment": ["this is the first", "this is the second"]
+              }
             ]
           }
         ],
         "connection": false
       },
       "width": 500,
-      "height": 181,
+      "height": 129,
       "selected": true,
-      "positionAbsolute": { "x": 226, "y": 300 },
+      "positionAbsolute": { "x": 229, "y": 311 },
       "dragging": false
     }
   ],
