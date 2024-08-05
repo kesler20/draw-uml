@@ -1,9 +1,22 @@
 import React, { useState } from "react";
 import { Handle, Position } from "react-flow-renderer";
 import ModalCard from "../components/ModalCard";
-import { findIndex } from "../utils/Utils";
 
-const UmlDiagram = ({ data }) => {
+/**
+ * find the index of the htmlElement in the htmlCollection
+ * @param {*} collection - this is an HTMLcollection
+ * @param {*} item - this is an htmlElement
+ * @returns number
+ */
+export const findIndexOfItemInCollection = (collection: any[], item: any) => {
+  let i = 0;
+  for (let j of collection) {
+    if (j === item) return i;
+    i++;
+  }
+};
+
+export default function UmlDiagram({ data }) {
   const [gridTable, setGridTable] = useState(data.gridTable);
   const [objectComment, setObjectComment] = useState(data.comment);
   const [viewObjectMetadata, setViewObjectMetadata] = useState(false);
@@ -18,7 +31,13 @@ const UmlDiagram = ({ data }) => {
       signature: "",
       returnType: "",
       comment: "signature description",
-      params: [{ name: "name", type: "str", comment: ["parameter comment","return comment"] }],
+      params: [
+        {
+          name: "name",
+          type: "str",
+          comment: ["parameter comment", "return comment"],
+        },
+      ],
     });
     let gridTable = grid;
     setGridTable({ gridTable });
@@ -58,7 +77,8 @@ const UmlDiagram = ({ data }) => {
   };
 
   const updateParamComment = (comment, paramIndex, commentType) => {
-    data.gridTable[currentRowIndex].params[paramIndex].comment[commentType] = comment;
+    data.gridTable[currentRowIndex].params[paramIndex].comment[commentType] =
+      comment;
     setGridTable(data.gridTable);
   };
 
@@ -99,7 +119,7 @@ const UmlDiagram = ({ data }) => {
         if (e.key === "ArrowRight") {
           try {
             let nextRow = e.target.parentNode.children.item(
-              findIndex(e.target.parentNode.children, e.target) + 1
+              findIndexOfItemInCollection(e.target.parentNode.children, e.target) + 1
             );
             nextRow.focus();
           } catch (e) {
@@ -108,7 +128,7 @@ const UmlDiagram = ({ data }) => {
         } else if (e.key === "ArrowLeft") {
           try {
             let nextRow = e.target.parentNode.children.item(
-              findIndex(e.target.parentNode.children, e.target) - 1
+              findIndexOfItemInCollection(e.target.parentNode.children, e.target) - 1
             );
             nextRow.focus();
           } catch (e) {
@@ -117,7 +137,7 @@ const UmlDiagram = ({ data }) => {
         } else if (e.key === "ArrowUp") {
           try {
             let nextRow = e.target.parentNode.children.item(
-              findIndex(e.target.parentNode.children, e.target) - 4
+              findIndexOfItemInCollection(e.target.parentNode.children, e.target) - 4
             );
             nextRow.focus();
           } catch (e) {
@@ -126,7 +146,7 @@ const UmlDiagram = ({ data }) => {
         } else if (e.key === "ArrowDown") {
           try {
             let nextRow = e.target.parentNode.children.item(
-              findIndex(e.target.parentNode.children, e.target) + 4
+              findIndexOfItemInCollection(e.target.parentNode.children, e.target) + 4
             );
             nextRow.focus();
           } catch (e) {
@@ -241,6 +261,4 @@ const UmlDiagram = ({ data }) => {
       </div>
     </div>
   );
-};
-
-export default UmlDiagram;
+}

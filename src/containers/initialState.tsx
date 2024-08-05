@@ -1,4 +1,4 @@
-export const getRandomNumber = (maxNum) => {
+export const getRandomNumber = (maxNum: number) => {
   return Math.floor(Math.random() * maxNum);
 };
 

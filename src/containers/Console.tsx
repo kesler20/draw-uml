@@ -7,13 +7,12 @@ import ReactFlow, {
   Controls,
   Background,
 } from "react-flow-renderer";
-import UmlDiagram from "./UmlDiagram.jsx";
-import { initialEdges, initialNodes, getRandomColor } from "./initialState";
-import NavbarComponent from "../components/Navbar";
+import UmlDiagram from "./UmlDiagram";
+import { initialEdges, initialNodes } from "./initialState";
 
 const nodeTypes = { umlDiagram: UmlDiagram };
 
-const Console = () => {
+export default function Console() {
   const [edges, setEdges] = useState(initialEdges);
   const [nodes, setNodes] = useState(initialNodes);
 
@@ -145,5 +144,3 @@ const Console = () => {
     </div>
   );
 };
-
-export default Console;

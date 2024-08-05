@@ -3,7 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 // import styled from "styled-components";
 // import { GiKnifeFork } from "react-icons/gi";
 
-function App() {
+export default function App() {
   return (
     <div className="App">
       <BrowserRouter>
@@ -12,5 +12,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
