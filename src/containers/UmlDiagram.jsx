@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Handle, Position } from "react-flow-renderer";
 import ModalCard from "../components/ModalCard";
 import { findIndex } from "../utils/Utils";
+import { FaPlus } from "react-icons/fa6";
 
 const UmlDiagram = ({ data }) => {
   const [gridTable, setGridTable] = useState(data.gridTable);
@@ -18,7 +19,13 @@ const UmlDiagram = ({ data }) => {
       signature: "",
       returnType: "",
       comment: "signature description",
-      params: [{ name: "name", type: "str", comment: ["parameter comment","return comment"] }],
+      params: [
+        {
+          name: "name",
+          type: "str",
+          comment: ["parameter comment", "return comment"],
+        },
+      ],
     });
     let gridTable = grid;
     setGridTable({ gridTable });
@@ -58,7 +65,8 @@ const UmlDiagram = ({ data }) => {
   };
 
   const updateParamComment = (comment, paramIndex, commentType) => {
-    data.gridTable[currentRowIndex].params[paramIndex].comment[commentType] = comment;
+    data.gridTable[currentRowIndex].params[paramIndex].comment[commentType] =
+      comment;
     setGridTable(data.gridTable);
   };
 
@@ -212,11 +220,7 @@ const UmlDiagram = ({ data }) => {
                   onKeyDown={(e) => handleNavigation(e)}
                 />
                 <div className="arrowBtn">
-                  <i
-                    className="fas fa-plus"
-                    aria-hidden="true"
-                    onClick={() => toggleModalView(index)}
-                  ></i>
+                  <FaPlus onClick={() => toggleModalView(index)} />
                 </div>
               </React.Fragment>
             );

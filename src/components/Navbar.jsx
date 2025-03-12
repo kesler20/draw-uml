@@ -9,6 +9,8 @@ import {
   SideBar,
   LinksCard,
 } from "./StyledElements";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { FaPlus } from "react-icons/fa6";
 
 const NavbarComponent = ({ onCreateTable, onCopyDiagram, onPasteDiagram }) => {
   const [sideBarView, setSideBarView] = useState([false]);
@@ -179,7 +181,7 @@ const NavbarComponent = ({ onCreateTable, onCopyDiagram, onPasteDiagram }) => {
     <div className="nav">
       <NavBar>
         <HamburgerMenu onClick={() => changeBarView()}>
-          <i className="fa fa-bars fa-2x" style={{ color: "grey" }}></i>
+          <GiHamburgerMenu color="gray" size={30} />
         </HamburgerMenu>
         <SiteTitle>
           <img src={Logo} alt="site logo" />
@@ -220,7 +222,7 @@ const NavbarComponent = ({ onCreateTable, onCopyDiagram, onPasteDiagram }) => {
             className="add-row-btn"
             onClick={() => setLinksView((prevState) => !prevState)}
           >
-            <i className="fas fa-plus" aria-hidden="true"></i>
+            <FaPlus />
           </div>
           <h3>Click on a Link</h3>
           {downloadableLinks.map((link, index) => {
@@ -243,7 +245,7 @@ const NavbarComponent = ({ onCreateTable, onCopyDiagram, onPasteDiagram }) => {
             className="add-row-btn"
             onClick={() => setLinksServerView((prevState) => !prevState)}
           >
-            <i className="fas fa-plus" aria-hidden="true"></i>
+            <FaPlus />
           </div>
           <h3>Click on a Link</h3>
           {downloadableServerLinks.map((link, index) => {

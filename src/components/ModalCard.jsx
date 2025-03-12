@@ -3,6 +3,7 @@ import { DesignNotes } from "./StyledElements";
 import { Badge } from "./StyledElements";
 import { findIndex } from "../utils/Utils";
 import CheckBox from "./CheckBox";
+import { FaPlus } from "react-icons/fa6";
 
 const ModalCard = (props) => {
   const [params, setParams] = useState(
@@ -205,7 +206,7 @@ const ModalCard = (props) => {
                 onKeyDown={(e) => handleNavigation(e)}
               ></input>
               <div className="add-row-btn" onClick={addRow}>
-                <i className="fas fa-plus" aria-hidden="true"></i>
+                <FaPlus />
               </div>
             </div>
             <div className="flex-row-around margin-small">
