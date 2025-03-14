@@ -11,6 +11,8 @@ import {
 } from "./StyledElements";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FaPlus } from "react-icons/fa6";
+import { FaCopy } from "react-icons/fa";
+import { FaPaste } from "react-icons/fa";
 
 const NavbarComponent = ({ onCreateTable, onCopyDiagram, onPasteDiagram }) => {
   const [sideBarView, setSideBarView] = useState([false]);
@@ -65,43 +67,6 @@ const NavbarComponent = ({ onCreateTable, onCopyDiagram, onPasteDiagram }) => {
     setSideBarView(currentView);
   };
 
-  const handlePasteCode = () => {
-    let elem2 = document.createElement("textarea");
-    elem2.classList.add("elem2");
-    elem2.addEventListener("change", (e) => {
-      uploadCode(e);
-    });
-    let nav = document.querySelector(".nav");
-    nav.appendChild(elem2);
-  };
-
-  const uploadSQLCode = async (e) => {
-    const fd = new FormData();
-
-    // add all selected files
-    Array.from(e.target.files).forEach((file) => {
-      fd.append("draw_sql_code", file, file.name);
-    });
-
-    await fetch(
-      `${process.env.REACT_APP_BACKEND_URL_PROD}/v1/servers`,
-      {
-        method: "POST",
-        body: fd,
-      }
-    )
-      .then((res) => {
-        if (res.ok) {
-          console.log(res);
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-
-      alert("File uploaded successfully ☑️")
-  };
-
   const uploadCode = (e) => {
     const url = `${process.env.REACT_APP_BACKEND_URL_PROD}/v1/files/existing`;
     fetch(url, {
@@ -137,38 +102,10 @@ const NavbarComponent = ({ onCreateTable, onCopyDiagram, onPasteDiagram }) => {
       return (
         <SideBar style={{ margin: "10px", color: "#e17bef" }}>
           <div className="avatar" data-tooltip="Copy Diagram">
-            <i className="fas fa-copy fa-2x" onClick={onCopyDiagram}></i>
+            <FaCopy onClick={onCopyDiagram} />
           </div>
           <div className="avatar" data-tooltip="Paste Diagram">
-            <i className="fas fa-paste fa-2x" onClick={onPasteDiagram}></i>
-          </div>
-          <div
-            onClick={() => setLinksView((prevState) => !prevState)}
-            className="avatar"
-            data-tooltip="Get Python Files"
-          >
-            <i className="fas fa-upload fa-2x"></i>
-          </div>
-          <div
-            onClick={handlePasteCode}
-            className="avatar"
-            data-tooltip="Paste Code"
-          >
-            <i className="fas fa-download fa-2x"></i>
-          </div>
-          <div
-            onClick={() => setViewFileUpload((prevState) => !prevState)}
-            className="avatar"
-            data-tooltip="SQL Upload"
-          >
-            <i className="fas fa-database fa-2x"></i>
-          </div>
-          <div
-            onClick={() => setLinksServerView((prevState) => !prevState)}
-            className="avatar"
-            data-tooltip="Get server"
-          >
-            <i className="fas fa-server fa-2x"></i>
+            <FaPaste onClick={onPasteDiagram} />
           </div>
         </SideBar>
       );
