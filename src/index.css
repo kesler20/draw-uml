@@ -21,7 +21,7 @@ body {
 }
 
 hr {
-  border: 0.5px ridge rgb(209, 146,245);
+  border: 0.5px ridge rgb(209, 146, 245);
   width: 100%;
 }
 
@@ -62,7 +62,7 @@ p {
 
 .flex-row-start {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   width: 95%;
 }
@@ -104,11 +104,7 @@ p {
 }
 
 .btn:hover {
-  background: linear-gradient(
-    90deg,
-    rgb(155, 209, 157) 0%,
-    rgb(142, 226, 243) 100%
-  );
+  background: linear-gradient(90deg, rgb(155, 209, 157) 0%, rgb(142, 226, 243) 100%);
 }
 
 .margin-small {
@@ -172,7 +168,6 @@ input.object-name::placeholder {
   color: whitesmoke;
 }
 
-
 .object-type {
   position: relative;
 }
@@ -211,7 +206,6 @@ input.object-name::placeholder {
   border: 0.5px solid var(--lines-color);
 }
 
-
 /*---------------------------Tooltip--------------------------------------------*/
 .avatar {
   width: 70px;
@@ -226,7 +220,7 @@ input.object-name::placeholder {
   --tooltip-color: #333;
 
   position: absolute;
-  top: -.25rem;
+  top: -0.25rem;
   left: 50%;
   transform: translateX(-50%) translateY(var(--translate-y, 0)) scale(var(--scale));
   transition: 150ms transform;
@@ -238,8 +232,8 @@ input.object-name::placeholder {
 
   content: attr(data-tooltip);
   color: white;
-  padding: .5rem;
-  border-radius: .3rem;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
   text-align: center;
   width: max-content;
   max-width: 100%;
@@ -254,12 +248,11 @@ input.object-name::placeholder {
 .avatar::after {
   --translate-y: calc(-1 * var(--arrow-size));
 
-  content: '';
+  content: "";
   border: var(--arrow-size) solid transparent;
   border-top-color: var(--tooltip-color);
   transform-origin: top center;
 }
-
 
 /* --------------------------------------------------------------- Media Queries -----------------------------------------------*/
 @media (max-width: 990px) {
