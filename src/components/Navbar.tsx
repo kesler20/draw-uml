@@ -27,7 +27,7 @@ type NavbarProps = {
   onEventUploadFile: (contents: string) => void;
 };
 
-const NavbarComponent = (props: NavbarProps) => {
+export default function NavbarComponent(props: NavbarProps) {
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) {
@@ -66,7 +66,7 @@ const NavbarComponent = (props: NavbarProps) => {
         </HamburgerMenu>
         <SiteTitle>
           <img src={Logo} alt="site logo" />
-          <p>drawUML</p>
+          <p>drawAPI</p>
         </SiteTitle>
         <Version>
           <p>version: {process.env.REACT_APP_VERSION}</p>
@@ -119,10 +119,7 @@ const NavbarComponent = (props: NavbarProps) => {
       )}
       {props.linksServerView && (
         <LinksCard>
-          <div
-            className="add-row-btn"
-            onClick={props.onEventToggleLinksServerView}
-          >
+          <div className="add-row-btn" onClick={props.onEventToggleLinksServerView}>
             <FaPlus />
           </div>
           <h3>Click on a Link</h3>
@@ -151,6 +148,4 @@ const NavbarComponent = (props: NavbarProps) => {
       )}
     </div>
   );
-};
-
-export default NavbarComponent;
+}

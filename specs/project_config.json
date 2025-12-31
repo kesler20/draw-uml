@@ -1,0 +1,17 @@
+{
+  "backend": {
+    "services": [["api"]],
+    "dao": [],
+    "dto": [],
+    "endpoints": [],
+    "tests": ["tests"],
+    "language": "python"
+  },
+  "frontend": {
+    "dto": [],
+    "language": "typescript"
+  },
+  "vault": ["test"],
+  "snippets": ["protocol", "snippets"],
+  "root": ["protocol", "draw-uml"]
+}

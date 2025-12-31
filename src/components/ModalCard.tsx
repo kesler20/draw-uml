@@ -2,7 +2,6 @@ import * as React from "react";
 import { FaPlus } from "react-icons/fa6";
 import { Badge, DesignNotes } from "./StyledElements";
 import CheckBox from "./CheckBox";
-import { findIndex } from "../utils/Utils";
 import type { UmlRow } from "../types/uml";
 
 type ModalCardProps = {
@@ -50,6 +49,18 @@ const ModalCard = (props: ModalCardProps) => {
     currentRow?.signature && currentRow.signature !== ""
       ? currentRow.signature
       : "signature";
+  
+  const findIndex = (
+    elements: HTMLCollection,
+    target: Element | null
+  ) => {
+    for (let i = 0; i < elements.length; i++) {
+      if (elements.item(i) === target) {
+        return i;
+      }
+    }
+    return -1;
+  }
 
   /**
    * handle the navigation by focusing the right input element depending on

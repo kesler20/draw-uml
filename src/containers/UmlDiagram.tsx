@@ -2,7 +2,6 @@ import * as React from "react";
 import { Handle, Position, type NodeProps } from "react-flow-renderer";
 import { FaPlus } from "react-icons/fa6";
 import ModalCard from "../components/ModalCard";
-import { findIndex } from "../utils/Utils";
 import type { UmlNodeData } from "../types/uml";
 
 type RowField = "visibility" | "signature" | "returnType";
@@ -52,6 +51,15 @@ type UmlDiagramHandlers = {
 export type UmlDiagramData = UmlNodeData & UmlDiagramHandlers;
 
 const UmlDiagram = ({ id, data }: NodeProps<UmlDiagramData>) => {
+  const findIndex = (elements: HTMLCollection, target: Element | null) => {
+    for (let i = 0; i < elements.length; i++) {
+      if (elements.item(i) === target) {
+        return i;
+      }
+    }
+    return -1;
+  };
+
   const handleNavigation = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Control") {
       data.onEventToggleInsertMode(id);
@@ -165,9 +173,7 @@ const UmlDiagram = ({ id, data }: NodeProps<UmlDiagramData>) => {
         <input
           type="text"
           placeholder={data.objectName}
-          onChange={(event) =>
-            data.onEventUpdateObjectName(id, event.target.value)
-          }
+          onChange={(event) => data.onEventUpdateObjectName(id, event.target.value)}
           className="object-name"
           style={{
             borderTop: data.dataclass
