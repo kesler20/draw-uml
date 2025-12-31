@@ -1,4 +1,7 @@
-export const getRandomNumber = (maxNum) => {
+import type { Edge, Node } from "react-flow-renderer";
+import type { UmlNodeData } from "../types/uml";
+
+export const getRandomNumber = (maxNum: number) => {
   return Math.floor(Math.random() * maxNum);
 };
 
@@ -10,9 +13,9 @@ export const getRandomColor = () => {
   return `rgb(${r}, ${g}, ${b})`;
 };
 
-export const initialEdges = [];
+export const initialEdges: Edge[] = [];
 
-export const initialNodes = [
+export const initialNodes: Node<UmlNodeData>[] = [
   {
     id: "node-1",
     type: "umlDiagram",
@@ -28,10 +31,19 @@ export const initialNodes = [
           signature: "",
           returnType: "",
           comment: "signature description",
-          params: [{ name: "name", type: "str" , comment : ["parameter comment","return comment"] }],
+          params: [
+            {
+              name: "name",
+              type: "str",
+              comment: ["parameter comment", "return comment"],
+            },
+          ],
         },
       ],
       connection: false,
+      viewObjectMetadata: false,
+      currentRowIndex: 0,
+      insertMode: true,
     },
   },
 ];

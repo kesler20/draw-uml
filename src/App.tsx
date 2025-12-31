@@ -1,7 +1,5 @@
-import Pages from "./pages/Pages";
 import { BrowserRouter } from "react-router-dom";
-// import styled from "styled-components";
-// import { GiKnifeFork } from "react-icons/gi";
+import Pages from "./pages/Pages";
 
 function App() {
   return (

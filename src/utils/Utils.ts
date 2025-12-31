@@ -4,10 +4,14 @@
  * @param {*} item - this is an htmlElement
  * @returns number
  */
-export const findIndex = (collection, item) => {
+export const findIndex = <T>(
+  collection: Iterable<T>,
+  item: T
+): number | undefined => {
   let i = 0;
-  for (let j of collection) {
+  for (const j of collection) {
     if (j === item) return i;
     i++;
   }
+  return undefined;
 };
